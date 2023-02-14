@@ -15,7 +15,13 @@ return new class extends Migration
     {
         Schema::create('question_answereds', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('question_id')->unsigned();
+            $table->string('video')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('question_id')->references('id')->on('questions')->onUpdate('cascade');
         });
     }
 
