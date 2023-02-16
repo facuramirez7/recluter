@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\InterviewController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +23,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::resources([
+    'empresas' => CompanyController::class,
+    'entrevistas' => InterviewController::class,
+    'cuestionario' => QuestionController::class,
+    //'posts' => PostController::class,
+]);
 
 
 

@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('position', 400);
             $table->unsignedBigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('company_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade');
         });
     }
 

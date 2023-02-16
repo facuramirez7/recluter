@@ -10,6 +10,8 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','photo','description'];
+
     //relationship with Interview model
     public function interview()
     {

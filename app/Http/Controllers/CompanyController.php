@@ -14,7 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::all();
+        return view('admin.company.index')->with('companies' , $companies);
     }
 
     /**
@@ -24,7 +25,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.company.create');
     }
 
     /**
@@ -35,7 +36,25 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Valdate the request
+        $request->validate([
+            'name' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png|max:4000',
+            'description' => 'required|min:10'
+        ]);
+
+        $new_company = $request->all();
+
+        /* Proceso de carga de logo */
+        if ($logo = $request->file('photo')) {
+            $rutaGuardarImg = 'img/companies'; /* Ruta donde se guarda dentro del servidor*/
+            $logoCompany = time() . "." . $logo->getClientOriginalExtension(); /* Nomenclatura del archivo */
+            $logo->move($rutaGuardarImg, $logoCompany);
+            $new_company['photo'] = "$logoCompany";
+        }
+
+        Company::create($new_company);
+        return redirect()->route('empresas.index');
     }
 
     /**
@@ -52,12 +71,13 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Company  $company
+     * @param  id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
-        //
+        $company = Company::find($id);
+        return view('admin.company.edit')->with('company' , $company);
     }
 
     /**
@@ -67,19 +87,51 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, $id)
     {
-        //
+        $company = Company::find($id);
+        //Valdate the request
+        $request->validate([
+            'name' => 'required',
+            'photo' => 'image|mimes:jpeg,png|max:4000',
+            'description' => 'required|min:10'
+        ]);
+
+        if(!is_null($request->photo)){
+            $update = $request->all();
+            if ($logo = $request->file('photo')) {
+                $path = 'img/companies'; /* Ruta donde se guarda dentro del servidor*/
+                $logoCompany = time() . "." . $logo->getClientOriginalExtension(); /* Nomenclatura del archivo */
+                if($logo->move($path, $logoCompany)){
+                    $update['photo'] = "$logoCompany";
+                    unlink('img/companies/' . $company->photo);
+                }              
+            }
+        } else {
+            $update =  $request->only(['name', 'description']);
+        }
+        $company->update($update);
+        return redirect()->route('empresas.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Company  $company
+     * @param  id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Company $company)
+    public function destroy($id)
     {
-        //
+        $company = Company::find($id);
+
+        //delete photo path
+        $img = public_path() . '/img/companies/' . $company->photo;
+        if (@getimagesize($img)) {
+            unlink($img);
+        }
+
+        $company->delete();
+
+        return redirect()->route('empresas.index');
     }
 }

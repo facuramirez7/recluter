@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/R.png') }}">
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -52,12 +52,6 @@
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">       
                     <img src="{{ asset('img/logo/recluter.png') }}" alt="Recluter" class="logo">
-                </div>
-
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
                 </div>
             </div>
         </div>

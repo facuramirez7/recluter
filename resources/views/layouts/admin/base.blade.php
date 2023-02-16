@@ -13,6 +13,7 @@
         <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/R.png') }}">
         <link rel="stylesheet" href="{{ asset('css/admin/base.css') }}">
         <link rel="stylesheet" href="{{ asset('/icons/pe-icon-7-stroke.css') }}">
+    
         @yield('css')
     </head>
     <body>
@@ -129,13 +130,13 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="#">
+                                            <a href="/empresas/create">
                                                 <i class="metismenu-icon"></i>
                                                 Crear
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="/empresas">
                                                 <i class="metismenu-icon"></i>
                                                 Listar
                                             </a>
@@ -153,19 +154,19 @@
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
-                                                Data Tables
+                                                Crear
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
-                                                Regular Tables
+                                                Listar
                                             </a>
                                         </li>
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
-                                                Grid Tables
+                                                Ver respuestas
                                             </a>
                                         </li>
                                     </ul>
@@ -180,26 +181,14 @@
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
-                                                Data Tables
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i>
-                                                Regular Tables
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i>
-                                                Grid Tables
+                                                Listar
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="app-sidebar__heading">Perfil</li>
                                 <li>
-                                    <a href="/logout">
+                                    <a href="/">
                                         <i class="metismenu-icon fa-solid fa-right-from-bracket"></i>Cerrar sesión
                                     </a>                
                                 </li>
@@ -224,6 +213,9 @@
                 </div>
             </div>
         </div>
+        <div class="loading show">
+            <div class="spin"></div>
+        </div>
         <div class="app-drawer-overlay d-none animated fadeIn"></div>
         <!-- PLUGINS -->
         <script type="text/javascript" src="{{ asset('js/admin/jquery.min.js') }}"></script>
@@ -232,5 +224,6 @@
         <!-- JS -->
         <script type="text/javascript" src="{{ asset('js/admin/demo.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/admin/app.js') }}"></script>
+
     </body>
 </html>
