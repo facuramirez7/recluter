@@ -101,44 +101,57 @@
                         <div class="app-sidebar__inner">
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Entidades</li>
-                                <li>
-                                    <a href="#">
-                                        <i class="metismenu-icon fa-solid fa-users"></i>
-                                        Usuarios
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
-                                    </a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i>
-                                                Crear
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i>
-                                                Listar
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                @can('admin.usuarios.index')
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon fa-solid fa-users"></i>
+                                            Usuarios
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="metismenu-icon"></i>
+                                                    Crear
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="metismenu-icon"></i>
+                                                    Listar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endcan
                                 <li>
                                     <a href="#">
                                         <i class="metismenu-icon fa-regular fa-building"></i>
-                                        Empresas
+                                        @if(Auth::user()->roles->pluck('name')->contains('Admin'))
+                                            Empresas
+                                        @else
+                                            Empresa
+                                        @endif
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                     <ul>
-                                        <li>
-                                            <a href="/empresas/create">
-                                                <i class="metismenu-icon"></i>
-                                                Crear
-                                            </a>
-                                        </li>
+                                @can('admin.empresas.create')
+                                            <li>
+                                                <a href="/empresas/create">
+                                                    <i class="metismenu-icon"></i>
+                                                    Crear
+                                                </a>
+                                            </li>
+                                            
+                                @endcan
                                         <li>
                                             <a href="/empresas">
                                                 <i class="metismenu-icon"></i>
-                                                Listar
+                                                @if(Auth::user()->roles->pluck('name')->contains('Admin'))
+                                                    Listar
+                                                @else
+                                                    Editar
+                                                @endif
                                             </a>
                                         </li>
                                     </ul>
@@ -151,12 +164,14 @@
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                     <ul>
-                                        <li>
-                                            <a href="#">
-                                                <i class="metismenu-icon"></i>
-                                                Crear
-                                            </a>
-                                        </li>
+                                        @can('admin.entrevistas.create')
+                                            <li>
+                                                <a href="#">
+                                                    <i class="metismenu-icon"></i>
+                                                    Crear
+                                                </a>
+                                            </li>
+                                        @endcan
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
@@ -166,7 +181,7 @@
                                         <li>
                                             <a href="#">
                                                 <i class="metismenu-icon"></i>
-                                                Ver respuestas
+                                                Ver candidaturas
                                             </a>
                                         </li>
                                     </ul>

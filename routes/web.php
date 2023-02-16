@@ -27,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resources([
     'empresas' => CompanyController::class,
     'entrevistas' => InterviewController::class,
-    'cuestionario' => QuestionController::class,
+    'cuestionarios' => QuestionController::class,
     //'posts' => PostController::class,
 ]);
 
