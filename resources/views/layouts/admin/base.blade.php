@@ -110,13 +110,13 @@
                                         </a>
                                         <ul>
                                             <li>
-                                                <a href="#">
+                                                <a href="/usuarios/create">
                                                     <i class="metismenu-icon"></i>
                                                     Crear
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="/usuarios">
                                                     <i class="metismenu-icon"></i>
                                                     Listar
                                                 </a>

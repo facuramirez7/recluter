@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\InterviewController;
 use App\Http\Controllers\QuestionController;
@@ -25,6 +26,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resources([
+    'usuarios' => UserController::class,
     'empresas' => CompanyController::class,
     'entrevistas' => InterviewController::class,
     'cuestionarios' => QuestionController::class,

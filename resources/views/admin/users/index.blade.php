@@ -1,11 +1,11 @@
 @extends('layouts.admin.base')
 
 @section('title')
-<title>Listado de Empresas</title>
+<title>Listado de Usarios</title>
 @endsection
 
 @section('description')
-<meta name="description" content="Listado de empresas">
+<meta name="description" content="Listado de usuarios">
 @endsection
 
 @section('css')
@@ -15,7 +15,7 @@
 @endsection
 
 @section('content-title')
-Empresas
+Usuarios
 @endsection
 
 @section('content-subtitle')
@@ -24,38 +24,40 @@ Listar
 
 @section('content')
 <div class="row justify-content-center">
-    <a href="/empresas/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i> CREAR EMPRESA</button> </a>
+    <a href="/usuarios/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i> CREAR USUARIO</button> </a>
   </div>
   
   <div class="main-card mb-3 card">
       <div class="card-body">
-          <table style="width: 100%;" id="empresas" class="table table-hover table-striped table-bordered">
+          <table style="width: 100%;" id="usuarios" class="table table-hover table-striped table-bordered">
               <thead>
                   <tr>
                       <th>ID</th>
-                      <th>Logo</th>
                       <th>Nombre</th>
-                      <th>Descripción</th>
-                      <th>Activo</th>
+                      <th>Rol</th>
+                      <th>Email</th>
+                      <th>Verificado</th>
+                      <th>Empresa</th>
                       <th>Opciones</th>
                   </tr>
               </thead>
               <tbody>
-                @foreach($companies as $company)
+                @foreach($users as $user)
                     <tr>
-                        <td>{{ $company->id}}</td>
-                        <td> <img src="/img/companies/{{$company->photo}}" width="50px"></td>
-                        <td>{{ $company->name}} </td>
-                        <td>{{ $company->description }}</td>
-                        <td>@if($company->active == 0) <i class="fa-solid fa-circle-xmark text-danger"></i> @else <i class="fa-solid fa-circle-check text-success"></i> @endif</td>                       
+                        <td>{{ $user->id}}</td>
+                        <td>{{ $user->name}} </td>
+                        <td>{{ str_replace(['"','[',']'], '', $user->roles->pluck('name'))  }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>@if($user->email_verified_at == NULL) <i class="fa-solid fa-circle-xmark text-danger"></i> @else <i class="fa-solid fa-circle-check text-success"></i> @endif</td>                       
+                        <td>@if(isset($user->company->name)) {{ $user->company->name }} @else - @endif</td>
                         <td>
                         <div class="row justify-content-center">
-                        <a class="mr-1" href="/empresas/{{ $company->id}}/edit"> <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i> </button></a>
-                        <form  action="{{route('empresas.destroy',$company->id)}}" method="POST" class="ml-1 formDelete">
+                        <a class="mr-1" href="/usuarios/{{ $user->id}}/edit"> <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i> </button></a>
+                        <form  action="{{route('empresas.destroy',$user->id)}}" method="POST" class="ml-1 formDelete">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="far fa-trash-alt"></i></i></button>
-                        </form>
+                        </form> 
                         </div>
                         </td> 
                     </tr>
@@ -75,7 +77,7 @@ Listar
 {{-- TABLE --}}
 <script>
     $(document).ready(function() {
-    $('#empresas').DataTable({
+    $('#usuarios').DataTable({
         rowReorder: {
             selector: 'td:nth-child(2)'
         },
@@ -89,13 +91,13 @@ Listar
         ],
         language: {
             "decimal": ",",
-            "emptyTable": "No hay empresas",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ empresas",
-            "infoEmpty": "Mostrando 0 a 0 de 0 empresas",
-            "infoFiltered": "(Filtrado de _MAX_ total empresas)",
+            "emptyTable": "No hay usuarios",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+            "infoEmpty": "Mostrando 0 a 0 de 0 usuarios",
+            "infoFiltered": "(Filtrado de _MAX_ total usuarios)",
             "infoPostFix": "",
             "thousands": ".",
-            "lengthMenu": "Mostrar _MENU_ empresas",
+            "lengthMenu": "Mostrar _MENU_ usuarios",
             "loadingRecords": "Cargando...",
             "processing": "Procesando...",
             "search": "Buscar:",
@@ -127,7 +129,7 @@ Listar
             text: "No podrás revertir esta acción",
             icon: 'warning',
             iconColor: '#D92550',
-            confirmButtonText: 'Eliminar empresa',
+            confirmButtonText: 'Eliminar usuario',
             showCancelButton: true,
             confirmButtonColor: '#D92550',
             cancelButtonColor: 'grey',
@@ -139,7 +141,7 @@ Listar
               this.submit();
               Swal.fire(
                 'Eliminado',
-                'La empresa se borró correctamente.',
+                'El usuario se borró correctamente.',
                 'success'
               )
             }
