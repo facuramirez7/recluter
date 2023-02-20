@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
-            $table->string('position', 400);
+            $table->string('position', 50);
             $table->unsignedBigInteger('user_id')->unsigned();
             $table->unsignedBigInteger('company_id')->unsigned();
             $table->timestamps();

@@ -11,9 +11,9 @@
         <meta name="msapplication-tap-highlight" content="no">
         <script src="https://kit.fontawesome.com/e948f2dbbf.js" crossorigin="anonymous"></script>
         <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/R.png') }}">
+        @yield('pre-css')
         <link rel="stylesheet" href="{{ asset('css/admin/base.css') }}">
         <link rel="stylesheet" href="{{ asset('/icons/pe-icon-7-stroke.css') }}">
-    
         @yield('css')
     </head>
     <body>
@@ -166,7 +166,7 @@
                                     <ul>
                                         @can('admin.entrevistas.create')
                                             <li>
-                                                <a href="#">
+                                                <a href="/entrevistas/create">
                                                     <i class="metismenu-icon"></i>
                                                     Crear
                                                 </a>
@@ -232,13 +232,15 @@
             <div class="spin"></div>
         </div>
         <div class="app-drawer-overlay d-none animated fadeIn"></div>
+        @yield('pre-plugins')
         <!-- PLUGINS -->
         <script type="text/javascript" src="{{ asset('js/admin/jquery.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/admin/metisMenu.js') }}"></script>
-        @yield('js')
+        <script type="text/javascript" src="{{ asset('js/admin/metisMenu.js') }}"></script>    
+        @yield('pre-js')
         <!-- JS -->
         <script type="text/javascript" src="{{ asset('js/admin/demo.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/admin/app.js') }}"></script>
+        @yield('js')
 
     </body>
 </html>

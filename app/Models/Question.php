@@ -11,6 +11,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['question','interview_id','video'];
+
     //relationship with Interview model
     public function interview()
     {

@@ -19,7 +19,7 @@ Crear
 @section('content')
 <div class="main-card mb-3 card">
     <div class="card-body">
-        <form action="{{route('empresas.store')}}" method="POST" id="agregar-producto" class="col-md-10 mx-auto" enctype='multipart/form-data'>
+        <form action="{{route('empresas.store')}}" method="POST" id="agregar-empresa" class="col-md-10 mx-auto" enctype='multipart/form-data'>
             @csrf
             @if ($errors->any())
             <div class="alert alert-danger">
