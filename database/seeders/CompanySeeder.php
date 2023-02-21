@@ -19,6 +19,13 @@ class CompanySeeder extends Seeder
             'name' => 'Grupo Tecnolog',
             'description' => 'Maquinaria pesada',
             'photo' => '1676866184.png',
+            'active' => 0,
+        ]);
+
+        Company::create([
+            'name' => 'Mercado Libre',
+            'description' => 'Marketplace más grande de Latam',
+            'photo' => '1676930884.png',
             'active' => 1,
         ]);
     }

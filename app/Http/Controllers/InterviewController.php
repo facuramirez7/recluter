@@ -16,7 +16,13 @@ class InterviewController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        if(auth()->check() and auth()->user()->roles->pluck('name')->contains('Admin')){
+            $interviews = Interview::all();
+        } else {
+            $interviews = Interview::where('company_id', '=', $user->company_id)->get();
+        }
+        return view('admin.interview.index')->with('interviews', $interviews);
     }
 
     /**
@@ -39,20 +45,21 @@ class InterviewController extends Controller
     {
          //Valdate the request
          $request->validate([
-            'position' => 'required|max:50'
+            'position' => 'required|max:50',
+            'description' => 'required|max:1500'
         ]);
 
-        $user = User::find($request->user_id);
-        if (isset($user->company->id)){
+        $user = User::find(auth()->user()->id);
+        //var_dump($request);
+        if(isset($user->company->id) && auth()->user()->company_id == $user->company_id){
             $new_interview = Interview::create([
                             'position' => $request->position,
+                            'description' => $request->description,
                             'user_id'  => $user->id,
                             'company_id'  => $user->company->id,
                          ]);
-            #por cada input que viene de la plantilla se crea una pregunta con el id de la entrevista creada
-            //var_dump($request->question);
-            //var_dump($request->video);
 
+            #por cada input que viene de la plantilla se crea una pregunta con el id de la entrevista creada
             for($i = 0; $i < 5; $i++){
                 if(!isset($request->video[$i])){
                     $video = 0;
@@ -64,7 +71,8 @@ class InterviewController extends Controller
                     'interview_id' => $new_interview->id,
                     'video' => $video,
                 ]);
-            }            
+            }
+            return redirect()->route('entrevistas.index');            
         } else {
             return 'No se encontró el usuario';
         }
@@ -114,5 +122,16 @@ class InterviewController extends Controller
     public function destroy(Interview $interview)
     {
         //
+    }
+
+    /**
+     * Apply for candidate.
+     *
+     * @param  \App\Models\Interview  $interview
+     * @return \Illuminate\Http\Response
+     */
+    public function apply(Interview $interview)
+    {
+        return view('candidate.apply')->with('interview', $interview);
     }
 }

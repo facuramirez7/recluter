@@ -1,11 +1,11 @@
 @extends('layouts.admin.base')
 
 @section('title')
-<title>Listado de Empresas</title>
+<title>Listado de Entrevistas</title>
 @endsection
 
 @section('description')
-<meta name="description" content="Listado de empresas">
+<meta name="description" content="Listado de entrevistas">
 @endsection
 
 @section('pre-css')
@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-Empresas
+Entrevistas
 @endsection
 
 @section('content-subtitle')
@@ -27,35 +27,42 @@ Listar
 @endsection
 
 @section('content')
+@php
+use App\Models\Company;
+@endphp
 <div class="row justify-content-center">
-    <a href="/empresas/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i> CREAR EMPRESA</button> </a>
+    <a href="/entrevistas/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i> CREAR ENTREVISTA</button> </a>
   </div>
   
   <div class="main-card mb-3 card">
       <div class="card-body">
-          <table style="width: 100%;" id="empresas" class="table table-hover table-striped table-bordered">
+          <table style="width: 100%;" id="entrevistas" class="table table-hover table-striped table-bordered">
               <thead>
                   <tr>
                       <th>ID</th>
-                      <th>Logo</th>
-                      <th>Nombre</th>
+                      <th>Posición</th>
+                      <th>Compañía</th>
                       <th>Descripción</th>
-                      <th>Activo</th>
                       <th>Opciones</th>
                   </tr>
               </thead>
               <tbody>
-                @foreach($companies as $company)
+                @foreach($interviews as $interview)
                     <tr>
-                        <td>{{ $company->id}}</td>
-                        <td> <img src="/img/companies/{{$company->photo}}" width="50px"></td>
-                        <td>{{ $company->name}} </td>
-                        <td>{{ $company->description }}</td>
-                        <td>@if($company->active == 0) <i class="fa-solid fa-circle-xmark text-danger"></i> @else <i class="fa-solid fa-circle-check text-success"></i> @endif</td>                       
+                        @php
+                            $company = Company::find($interview->company_id)
+                        @endphp
+                        <td>{{ $interview->id}}</td>
+                        <td>{{ $interview->position}} </td>
+                        <td>{{ $company->name }}</td>
+                        <td>{{ substr($interview->description, 0, 100) }}..</td>                      
                         <td>
                             <div class="row justify-content-center">
-                                <a class="mr-1" href="/empresas/{{ $company->id}}/edit"> <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i> </button></a>
-                                <form  action="{{route('empresas.destroy',$company->id)}}" method="POST" class="ml-1 formDelete">
+                                <input type="text" value="http://localhost:8000/aplicar/{{$interview->id}}" id="target-{{$interview->id}}" style="display: none;" readonly>
+                                <a class="mr-1" onclick="copiar('target-{{$interview->id}}')"> <button type="button"  class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Copiar link"> <i class="fa-solid fa-link"></i> </button></a>
+                                <a class="mr-1" href="/entrevistas/{{ $interview->id}}"> <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
+                                <a class="mr-1" href="/entrevistas/{{ $interview->id}}/edit"> <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i> </button></a>
+                                <form  action="{{route('entrevistas.destroy',$interview->id)}}" method="POST" class="formDelete">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="far fa-trash-alt"></i></i></button>
@@ -79,7 +86,7 @@ Listar
 {{-- TABLE --}}
 <script>
     $(document).ready(function() {
-    $('#empresas').DataTable({
+    $('#entrevistas').DataTable({
         rowReorder: {
             selector: 'td:nth-child(2)'
         },
@@ -93,13 +100,13 @@ Listar
         ],
         language: {
             "decimal": ",",
-            "emptyTable": "No hay empresas",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ empresas",
-            "infoEmpty": "Mostrando 0 a 0 de 0 empresas",
-            "infoFiltered": "(Filtrado de _MAX_ total empresas)",
+            "emptyTable": "No hay entrevistas",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ entrevistas",
+            "infoEmpty": "Mostrando 0 a 0 de 0 entrevistas",
+            "infoFiltered": "(Filtrado de _MAX_ total entrevistas)",
             "infoPostFix": "",
             "thousands": ".",
-            "lengthMenu": "Mostrar _MENU_ empresas",
+            "lengthMenu": "Mostrar _MENU_ entrevistas",
             "loadingRecords": "Cargando...",
             "processing": "Procesando...",
             "search": "Buscar:",
@@ -114,6 +121,11 @@ Listar
 
     });
 });
+</script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>
 {{-- SWEET ALERT --}}
 <script>
@@ -131,7 +143,7 @@ Listar
             text: "No podrás revertir esta acción",
             icon: 'warning',
             iconColor: '#D92550',
-            confirmButtonText: 'Eliminar empresa',
+            confirmButtonText: 'Eliminar entrevista',
             showCancelButton: true,
             confirmButtonColor: '#D92550',
             cancelButtonColor: 'grey',
@@ -143,7 +155,7 @@ Listar
               this.submit();
               Swal.fire(
                 'Eliminado',
-                'La empresa se borró correctamente.',
+                'La entrevista se borró correctamente.',
                 'success'
               )
             }
@@ -153,4 +165,5 @@ Listar
     })
 })()
 </script>
+<script type="text/javascript" src="{{ asset('js/interview/link.js') }}"></script>
 @endsection

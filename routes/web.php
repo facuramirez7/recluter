@@ -29,10 +29,9 @@ Route::resources([
     'usuarios' => UserController::class,
     'empresas' => CompanyController::class,
     'entrevistas' => InterviewController::class,
-    'cuestionarios' => QuestionController::class,
-    //'posts' => PostController::class,
+    'cuestionarios' => QuestionController::class
 ]);
 
-
-
 Route::get('/admin/dashboard', function () {return view('admin.dashboard');});
+
+Route::get('/aplicar/{interview}', [InterviewController::class, 'apply'])->name('aplicar');

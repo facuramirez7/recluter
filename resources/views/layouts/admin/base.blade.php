@@ -13,11 +13,16 @@
         <link rel="shortcut icon" type="image/png" href="{{ asset('img/logo/R.png') }}">
         @yield('pre-css')
         <link rel="stylesheet" href="{{ asset('css/admin/base.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/admin/loader.css') }}">
         <link rel="stylesheet" href="{{ asset('/icons/pe-icon-7-stroke.css') }}">
         @yield('css')
     </head>
     <body>
-        <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+        <!-- LOADER -->
+        <div class="loading show" id="preloadspinner">
+            <div class="spin"></div>
+        </div>
+        <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar" id="main-container">
             <div class="app-header header-shadow">
                 <div class="app-header__logo">
                     <a href="/"><div class="logo-src"><img src="{{ asset('img/logo/recluter.png') }}" style="height: 26px" alt="Recluter"></div></a>
@@ -66,6 +71,8 @@
             
             <!-- SIDEBAR -->
             <div class="app-main">
+                @guest
+                @else
                 <div class="app-sidebar sidebar-shadow">
                     <div class="app-header__logo">
                         <div class="logo-src"></div>
@@ -100,6 +107,7 @@
                     <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
                             <ul class="vertical-nav-menu">
+                                
                                 <li class="app-sidebar__heading">Entidades</li>
                                 @can('admin.usuarios.index')
                                     <li>
@@ -173,7 +181,7 @@
                                             </li>
                                         @endcan
                                         <li>
-                                            <a href="#">
+                                            <a href="/entrevistas">
                                                 <i class="metismenu-icon"></i>
                                                 Listar
                                             </a>
@@ -208,9 +216,11 @@
                                     </a>                
                                 </li>
                             </ul>
+                            
                         </div>
                     </div>
                 </div>
+                @endguest
                 <div class="app-main__outer">
                     <div class="app-main__inner">
                         <div class="app-page-title">
@@ -223,15 +233,15 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- CONTENT -->
                         @yield('content')
                     </div>
                 </div>
             </div>
         </div>
-        <div class="loading show">
-            <div class="spin"></div>
-        </div>
-        <div class="app-drawer-overlay d-none animated fadeIn"></div>
+
+        
+
         @yield('pre-plugins')
         <!-- PLUGINS -->
         <script type="text/javascript" src="{{ asset('js/admin/jquery.min.js') }}"></script>
@@ -239,8 +249,8 @@
         @yield('pre-js')
         <!-- JS -->
         <script type="text/javascript" src="{{ asset('js/admin/demo.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/admin/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/admin/app.js') }}"></script>  
         @yield('js')
-
+        <script type="text/javascript" src="{{ asset('js/admin/loader.js') }}"></script>
     </body>
 </html>
