@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned();
             $table->unsignedBigInteger('question_id')->unsigned();
-            $table->string('video')->nullable();
+            $table->string('answer', 1000)->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');

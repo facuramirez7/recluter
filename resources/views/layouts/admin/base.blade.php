@@ -202,7 +202,7 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="#">
+                                            <a href="/candidatos">
                                                 <i class="metismenu-icon"></i>
                                                 Listar
                                             </a>

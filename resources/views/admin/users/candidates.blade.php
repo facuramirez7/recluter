@@ -1,11 +1,11 @@
 @extends('layouts.admin.base')
 
 @section('title')
-<title>Listado de Usuarios</title>
+<title>Listado de Candidatos</title>
 @endsection
 
 @section('description')
-<meta name="description" content="Listado de usuarios">
+<meta name="description" content="Listado de candidatos">
 @endsection
 
 @section('pre-css')
@@ -19,7 +19,7 @@
 @endsection
 
 @section('content-title')
-Usuarios
+Candidatos
 @endsection
 
 @section('content-subtitle')
@@ -27,43 +27,26 @@ Listar
 @endsection
 
 @section('content')
-<div class="row justify-content-center">
-    <a href="/usuarios/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i> CREAR USUARIO</button> </a>
-  </div>
-  
-  <div class="main-card mb-3 card">
+    <div class="main-card mb-3 card">
       <div class="card-body">
-          <table style="width: 100%;" id="usuarios" class="table table-hover table-striped table-bordered">
+          <table style="width: 100%;" id="candidatos" class="table table-hover table-striped table-bordered">
               <thead>
                   <tr>
                       <th>ID</th>
                       <th>Nombre</th>
-                      <th>Rol</th>
                       <th>Email</th>
-                      <th>Verificado</th>
                       <th>Empresa</th>
-                      <th>Opciones</th>
+                      <th>Respuestas</th>
                   </tr>
               </thead>
               <tbody>
                 @foreach($users as $user)
                     <tr>
-                        <td>{{ $user->id}}</td>
-                        <td>{{ $user->name}} </td>
-                        <td>{{ str_replace(['"','[',']'], '', $user->roles->pluck('name'))  }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>@if($user->email_verified_at == NULL) <i class="fa-solid fa-circle-xmark text-danger"></i> @else <i class="fa-solid fa-circle-check text-success"></i> @endif</td>                       
+                        <td>{{$user->id}}</td>
+                        <td>{{$user->name}} </td>
+                        <td>{{$user->email}}</td>                 
                         <td>@if(isset($user->company->name)) {{ $user->company->name }} @else - @endif</td>
-                        <td>
-                        <div class="row justify-content-center">
-                        <a class="mr-1" href="/usuarios/{{ $user->id}}/edit"> <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar"> <i class="fas fa-edit"></i> </button></a>
-                        <form  action="{{route('empresas.destroy',$user->id)}}" method="POST" class="ml-1 formDelete">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="far fa-trash-alt"></i></i></button>
-                        </form> 
-                        </div>
-                        </td> 
+                        <td>{{count($user->question_answereds)}}</td> 
                     </tr>
                 @endforeach
               </tbody>
@@ -81,7 +64,7 @@ Listar
 {{-- TABLE --}}
 <script>
     $(document).ready(function() {
-    $('#usuarios').DataTable({
+    $('#candidatos').DataTable({
         rowReorder: {
             selector: 'td:nth-child(2)'
         },
@@ -95,13 +78,13 @@ Listar
         ],
         language: {
             "decimal": ",",
-            "emptyTable": "No hay usuarios",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
-            "infoEmpty": "Mostrando 0 a 0 de 0 usuarios",
-            "infoFiltered": "(Filtrado de _MAX_ total usuarios)",
+            "emptyTable": "No hay candidatos",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ candidatos",
+            "infoEmpty": "Mostrando 0 a 0 de 0 candidatos",
+            "infoFiltered": "(Filtrado de _MAX_ total candidatos)",
             "infoPostFix": "",
             "thousands": ".",
-            "lengthMenu": "Mostrar _MENU_ usuarios",
+            "lengthMenu": "Mostrar _MENU_ candidatos",
             "loadingRecords": "Cargando...",
             "processing": "Procesando...",
             "search": "Buscar:",
@@ -133,7 +116,7 @@ Listar
             text: "No podrás revertir esta acción",
             icon: 'warning',
             iconColor: '#D92550',
-            confirmButtonText: 'Eliminar usuario',
+            confirmButtonText: 'Eliminar candidato',
             showCancelButton: true,
             confirmButtonColor: '#D92550',
             cancelButtonColor: 'grey',
@@ -145,7 +128,7 @@ Listar
               this.submit();
               Swal.fire(
                 'Eliminado',
-                'El usuario se borró correctamente.',
+                'El candidato se borró correctamente.',
                 'success'
               )
             }

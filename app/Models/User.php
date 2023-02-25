@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\Company;
+use App\Models\QuestionAnswered;
 
 class User extends Authenticatable
 {
@@ -22,8 +23,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'country',
+        'date_of_birth',
         'email',
         'password',
+        'company_id',
     ];
 
     /**
@@ -48,5 +53,11 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    //relationship with QuestionAnswered model
+    public function question_answereds()
+    {
+        return $this->hasMany(QuestionAnswered::class);
     }
 }

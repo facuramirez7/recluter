@@ -19,6 +19,21 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the candidates.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function candidates()
+    {
+        if(auth()->check() and auth()->user()->roles->pluck('name')->contains('Admin')){
+            $users = User::where('password', '=', null)->get();
+        } else {
+            $users = User::where('password', '=', null)->where('company_id', '=',  auth()->user()->company_id)->get();
+        }
+        return view('admin.users.candidates')->with('users' , $users);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

@@ -43,7 +43,7 @@ class InterviewController extends Controller
      */
     public function store(Request $request)
     {
-         //Valdate the request
+         //Validate the request
          $request->validate([
             'position' => 'required|max:50',
             'description' => 'required|max:1500'
@@ -133,5 +133,46 @@ class InterviewController extends Controller
     public function apply(Interview $interview)
     {
         return view('candidate.apply')->with('interview', $interview);
+    }
+
+    public function store_user(Request $request)
+    {
+        $interview = Interview::find($request->interview_id);
+        //Validate the request
+        $request->validate([
+            'name' => 'required|max:50',
+            'email' => 'required|max:100|email',
+            'surname' => 'required|max:50',
+            'country' => 'required|max:50',
+            'date_of_birth' => 'required|date|before:01/01/2010'
+        ]);
+        $user = User::where('email', '=', $request->email)->first();
+        if(isset($user)){
+            $user_update = $request->only(['name','surname','country']);
+            $user_update['company_id'] = $interview->company_id;
+            $user->update($user_update);
+        } else{
+            User::create([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'country' => $request->country,
+                'date_of_birth' => $request->date_of_birth,
+                'company_id' => $interview->company_id,
+                'email' => $request->email,      
+            ])->assignRole('Candidate');
+        }
+        $question = Question::where('interview_id', '=', $interview->id)->first();
+        return redirect()->route('aplicar_pregunta',$question);
+    }
+
+    /**
+     * Apply question for candidate.
+     *
+     * @param  \App\Models\Question  question
+     * @return \Illuminate\Http\Response
+     */
+    public function question(Question $question)
+    {
+        return view('candidate.question')->with('question', $question);
     }
 }

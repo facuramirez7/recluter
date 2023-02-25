@@ -33,5 +33,13 @@ Route::resources([
 ]);
 
 Route::get('/admin/dashboard', function () {return view('admin.dashboard');});
+Route::get('/candidatos', [UserController::class, 'candidates'])->name('candidatos');
+
+
+
+
 
 Route::get('/aplicar/{interview}', [InterviewController::class, 'apply'])->name('aplicar');
+Route::post('/aplicar/store/user', [InterviewController::class, 'store_user'])->name('aplicar.store.user');
+
+Route::get('/pregunta/{question}', [InterviewController::class, 'question'])->name('aplicar_pregunta');
