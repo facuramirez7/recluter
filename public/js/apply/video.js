@@ -64,7 +64,7 @@ startBtn.addEventListener('click', function (e) {
                 method: 'POST',
                 body: formdata
             }).then(()=>{
-                alert('Se ha subido su video como respuesta!')
+                console.log('Se ha subido su video como respuesta!')
             })
         }
 

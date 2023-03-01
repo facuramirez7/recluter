@@ -68,9 +68,6 @@
                             <span id="span2">Tienes tiempo hasta: </span>
                             <br>
                             <span id="countdown2"></span>
-                            <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
-                            <button type="button" class="d-none" id="stop-media">Parar grabación</button>
-                            <br>
                         @else
                             <div>
                                 <video autoplay="" id="stream-elem" controls width="600" style="border-radius: 10px;"
@@ -87,6 +84,7 @@
                             <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
                             <button type="button" class="d-none" id="stop-media">Parar grabación</button>
                             <br>
+                            <input type="hidden" name="answer" value="{{ $time }}">
                         @endif
                     @else
                         {{-- If is the last question --}}
@@ -109,9 +107,6 @@
                                     <span id="span2">Tienes tiempo hasta: </span>
                                     <br>
                                     <span id="countdown2"></span>
-                                    <button type="button" class="d-none" id="start-stream">EmpezarRRRRR grabacion</button>
-                                    <button type="button" class="d-none" id="stop-media">Parar grabación</button>
-                                    <br>
                                 @else
                                     <div>
                                         <video autoplay="" id="stream-elem" controls width="600"
@@ -127,6 +122,7 @@
                                     <span id="countdown2"></span>
                                     <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
                                     <button type="button" class="d-none" id="stop-media">Parar grabación</button>
+                                    <input type="hidden" name="answer" value="{{ $time }}">
                                     <br>
                                 @endif
             @endif
@@ -225,9 +221,9 @@
                     console.log('Apagar camara');
                     videoElem.pause();
                     recorder.stop();
-                    
+
                     //wait(2000);
-                    //$("#next").trigger("click");
+                    $("#next").trigger("click");
                 } else if (totalTime2 == warning) {
                     totalTime2 -= 1;
                     setTimeout("updateClock2()", 1000);

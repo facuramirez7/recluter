@@ -212,7 +212,7 @@ class InterviewController extends Controller
             QuestionAnswered::create([
                 'question_id' => $question_now->id,
                 'user_id' => $user->id,
-                'answer' => 'VIDEO.mp4'
+                'answer' => $request->answer . '.mp4'
             ]);
         }
 
@@ -253,7 +253,7 @@ class InterviewController extends Controller
             QuestionAnswered::create([
                 'question_id' => $question_now->id,
                 'user_id' => $user->id,
-                'answer' => 'VIDEO.mp4'
+                'answer' => $request->answer . '.mp4'
             ]);
         }
 
@@ -274,6 +274,6 @@ class InterviewController extends Controller
     public function save_video(Request $request)
     {
         var_dump($_FILES['blobFile']);
-        move_uploaded_file($_FILES['blobFile']['tmp_name'],  'video/answer/'.$request->time . '.mp4');
+        move_uploaded_file($_FILES['blobFile']['tmp_name'],  'video/answer/' . $request->time . '.mp4');
     }
 }
