@@ -37,6 +37,7 @@ Listar
                       <th>Email</th>
                       <th>Empresa</th>
                       <th>Respuestas</th>
+                      <th>Ver Respuestas</th>
                   </tr>
               </thead>
               <tbody>
@@ -47,6 +48,13 @@ Listar
                         <td>{{$user->email}}</td>                 
                         <td>@if(isset($user->company->name)) {{ $user->company->name }} @else - @endif</td>
                         <td>{{count($user->question_answereds)}}</td> 
+                        <td>
+                          <div class="row justify-content-center">
+                              <a class="mr-1" href="/candidatura/{{ $user->id }}"> <button type="button"
+                                      class="btn btn-warning" data-toggle="tooltip" data-placement="top"
+                                      title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
+                          </div>
+                      </td>
                     </tr>
                 @endforeach
               </tbody>

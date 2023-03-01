@@ -12,7 +12,7 @@ class Interview extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['position','user_id','company_id','description','company_id'];
+    protected $fillable = ['position', 'user_id', 'company_id', 'description', 'company_id', 'time_to_think', 'time_to_reply', 'goodbye'];
 
     //relationship with Company model
     public function company()

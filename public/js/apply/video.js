@@ -13,6 +13,8 @@ const settings = {
 startBtn.addEventListener('click', function (e) {
     navigator.mediaDevices.getUserMedia(settings).then((stream) => {
         console.log(stream);
+        console.log('start-stream');
+        console.log(endBtn);
         videoElem.srcObject = stream
 
         recorder = new MediaRecorder(stream)
@@ -36,21 +38,29 @@ startBtn.addEventListener('click', function (e) {
         
         recorder.onstop = function (e) {
             console.log(window.URL.createObjectURL(new Blob(blobContainer)));
+            console.log('Parando de grabar..');
+            //console.log(endBtn);
             var newVideoEl = document.createElement('video')
             newVideoEl.height = '400'
             newVideoEl.width = '600'
+            newVideoEl.radius = '10'
             newVideoEl.autoplay = true
             newVideoEl.controls = true
             newVideoEl.innerHTML = `<source src="${window.URL.createObjectURL(new Blob(blobContainer))}"
              type="video/mp4">`
-            document.body.removeChild(videoElem)
-            document.body.insertBefore(newVideoEl, startBtn);
+            //document.body.removeChild(videoElem)
+            //document.body.insertBefore(newVideoEl, startBtn);
 
             var formdata = new FormData();
             formdata.append('blobFile', new Blob(blobContainer));
+            formdata.append('time', time);
+            //alert(formdata)
 
 
-            fetch('uploader.php', {
+            fetch('http://localhost:8000/guardar-video', {
+                headers: {
+                    'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
+                },
                 method: 'POST',
                 body: formdata
             }).then(()=>{
@@ -65,8 +75,5 @@ startBtn.addEventListener('click', function (e) {
     
 })
 
-endBtn.addEventListener('click', function (e) {
-    videoElem.pause();
-    recorder.stop();
-})
+
 

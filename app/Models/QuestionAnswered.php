@@ -10,6 +10,8 @@ class QuestionAnswered extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['question_id','user_id','answer'];
+
     //relationship with Question model
     public function question()
     {

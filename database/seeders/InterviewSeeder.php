@@ -23,7 +23,10 @@ class InterviewSeeder extends Seeder
             📍 BUENOS AIRES, ARGENTINA.
             👩🏻‍💻 Esquema Híbrido (Se asiste a las oficinas por reuniones esporádicas 1 vez cada 15 días)',
             'user_id' => 2,
-            'company_id' => 1
+            'company_id' => 1,
+            'time_to_think' => 12,
+            'time_to_reply' => 12,
+            'goodbye' => 'Gracias por responder el cuestionario! Cualquier novedad te la comunicaremos.',
            ]);
 
         Question::create([
