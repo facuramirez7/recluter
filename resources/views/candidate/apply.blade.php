@@ -50,6 +50,10 @@
                     micrófono en todo el proceso, y que tengas tu CV en PDF (te pediremos que lo cargues).
 
                     Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente.
+                    <br>
+                    Tiempo estimado para pensar: <b>{{ $interview->time_to_think}} segundos</b>
+                    <br>
+                    Tiempo estimado para responder: <b>{{ $interview->time_to_reply}} segundos</b>  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar <i

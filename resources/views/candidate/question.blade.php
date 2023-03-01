@@ -71,7 +71,7 @@
                         @else
                             <div>
                                 <video autoplay="" id="stream-elem" controls width="600" style="border-radius: 10px;"
-                                    height="400">
+                                    height="400" muted>
                                     <source src="" type="">
                                 </video>
                             </div>
@@ -111,7 +111,7 @@
                                     <div>
                                         <video autoplay="" id="stream-elem" controls width="600"
                                             style="border-radius: 10px;" height="400">
-                                            <source src="" type="">
+                                            <source src="" type="" muted>
                                         </video>
                                     </div>
                                     <span id="span">Prepárate! El video empezará en: </span>

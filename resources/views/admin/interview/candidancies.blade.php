@@ -37,7 +37,7 @@
                     <p class="mb-4">{{ $answer->answer }}</p>
                 @else
                     <p class="mb-2"><b>{{ $answer->question->question }}</b></p>
-                    <video autoplay="" id="stream-elem" controls width="600" style="border-radius: 10px;"
+                    <video id="stream-elem" controls width="600" style="border-radius: 10px;"
                         height="400" class="mb-4">
                         <source src="{{asset('video/answer/'.$answer->answer)}}" type="video/mp4">
                     </video>
