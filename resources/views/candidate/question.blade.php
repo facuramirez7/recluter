@@ -28,7 +28,7 @@
 
         #countdown,
         #countdown2 {
-            font-size: 100px;
+            font-size: 98px;
         }
     </style>
 @endsection
