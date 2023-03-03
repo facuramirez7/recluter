@@ -62,7 +62,7 @@
                             <label for="answer">Respuesta</label>
                             <textarea disabled rows="1" placeholder="Ingrese su respuesta aquí, no exceda los 1000 caracteres.."
                                 class="form-control autosize-input" style="height: 77px;" name="answer" idea id="answer"></textarea>
-                            <span id="span">Piensa tu respuesta en: </span>
+                            <span id="span">Prepárate! El tiempo corre en: </span>
                             <br>
                             <span id="countdown"></span>
                             <span id="span2">Tienes tiempo hasta: </span>
@@ -75,7 +75,7 @@
                                     <source src="" type="">
                                 </video>
                             </div>
-                            <span id="span">Prepárate! El video empezará en: </span>
+                            <span id="span">Prepárate! La grabación empezará en: </span>
                             <br>
                             <span id="countdown"></span>
                             <span id="span2">La grabación termina en: </span>
@@ -101,7 +101,7 @@
                                     <label for="answer">Respuesta</label>
                                     <textarea disabled rows="1" placeholder="Ingrese su respuesta aquí, no exceda los 1000 caracteres.."
                                         class="form-control autosize-input" style="height: 77px;" name="answer" idea id="answer"></textarea>
-                                    <span id="span">Piensa tu respuesta en: </span>
+                                    <span id="span">Prepárate! El tiempo corre en: </span>
                                     <br>
                                     <span id="countdown"></span>
                                     <span id="span2">Tienes tiempo hasta: </span>
@@ -114,7 +114,7 @@
                                             <source src="" type="" muted>
                                         </video>
                                     </div>
-                                    <span id="span">Prepárate! El video empezará en: </span>
+                                    <span id="span">Prepárate! La grabación empezará en: </span>
                                     <br>
                                     <span id="countdown"></span>
                                     <span id="span2">La grabación termina en: </span>
@@ -221,9 +221,7 @@
                     console.log('Apagar camara');
                     videoElem.pause();
                     recorder.stop();
-
-                    //wait(2000);
-                    $("#next").trigger("click");
+                    //$("#next").trigger("click");
                 } else if (totalTime2 == warning) {
                     totalTime2 -= 1;
                     setTimeout("updateClock2()", 1000);

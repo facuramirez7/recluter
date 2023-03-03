@@ -25,7 +25,7 @@ startBtn.addEventListener('click', function (e) {
         const blobContainer = [];
 
         recorder.ondataavailable = function (e) {
-            
+
             blobContainer.push(e.data)
         }
 
@@ -33,9 +33,9 @@ startBtn.addEventListener('click', function (e) {
             return console.log(e.error || new Error(e.name));
         }
 
-        
 
-        
+
+
         recorder.onstop = function (e) {
             console.log(window.URL.createObjectURL(new Blob(blobContainer)));
             console.log('Parando de grabar..');
@@ -63,16 +63,20 @@ startBtn.addEventListener('click', function (e) {
                 },
                 method: 'POST',
                 body: formdata
-            }).then(()=>{
-                console.log('Se ha subido su video como respuesta!')
-            })
+            }).then(response => response.json())
+                .then(function (data) {
+                    if (data.status == 'ok') {
+                        console.log('Se subió correctamente');
+                        $("#next").trigger("click");
+                    } else {
+                        console.log('Error');
+                        alert('Error al subir el video, por favor grabe de vuelta.');
+                        location.reload();
+                    }
+                });
         }
-
-
-
-
     })
-    
+
 })
 
 

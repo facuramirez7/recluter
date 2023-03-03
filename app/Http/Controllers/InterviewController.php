@@ -273,7 +273,11 @@ class InterviewController extends Controller
 
     public function save_video(Request $request)
     {
-        var_dump($_FILES['blobFile']);
-        move_uploaded_file($_FILES['blobFile']['tmp_name'],  'video/answer/' . $request->time . '.mp4');
+        //var_dump($_FILES['blobFile']);
+        if (move_uploaded_file($_FILES['blobFile']['tmp_name'],  'video/answer/' . $request->time . '.mp4')) {
+            return response()->json(['status' => 'ok']);
+        } else {
+            return response()->json(['status' => 'error']);
+        }
     }
 }

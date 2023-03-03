@@ -55,7 +55,7 @@
             <div class="app-header__menu">
 
             </div>
-            <div class="app-header__content">
+            <div class="app-header__content d-none">
                 <div class="app-header-right">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -205,7 +205,9 @@
                                 </li>
                                 <li class="app-sidebar__heading">Perfil</li>
                                 <li>
-                                    <a href="/">
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                  document.getElementById('logout-form').submit();">
                                         <i class="metismenu-icon fa-solid fa-right-from-bracket"></i>Cerrar sesión
                                     </a>
                                 </li>
