@@ -32,13 +32,14 @@ Route::resources([
     'cuestionarios' => QuestionController::class
 ]);
 
-Route::get('/admin/dashboard', function () {return view('admin.dashboard');});
+Route::get('/admin/dashboard', function () {return view('admin.dashboard');})->name('admin.dashboard');
 Route::get('/candidatura/{user}', [InterviewController::class, 'candidancie'])->name('candidatura');
 Route::get('/candidatos', [UserController::class, 'candidates'])->name('candidatos');
 
 
-
-
+//el recluter crea la empresa y se le asigna el company_id
+Route::get('/empresa/crear', [CompanyController::class, 'recluter'])->name('empresa.recluter.crear');
+Route::post('/empresa/relucter/crear', [CompanyController::class, 'recluter_store'])->name('empresa.recluter.store');
 
 Route::get('/aplicar/{interview}', [InterviewController::class, 'apply'])->name('aplicar');
 Route::post('/aplicar/store/user', [InterviewController::class, 'store_user'])->name('aplicar.store.user');

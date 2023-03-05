@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -15,7 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('admin.company.index')->with('companies' , $companies);
+        return view('admin.company.index')->with('companies', $companies);
     }
 
     /**
@@ -36,7 +37,7 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //Valdate the request
+        //Validate the request
         $request->validate([
             'name' => 'required',
             'photo' => 'required|image|mimes:jpeg,png|max:4000',
@@ -77,7 +78,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $company = Company::find($id);
-        return view('admin.company.edit')->with('company' , $company);
+        return view('admin.company.edit')->with('company', $company);
     }
 
     /**
@@ -97,15 +98,15 @@ class CompanyController extends Controller
             'description' => 'required|min:10'
         ]);
 
-        if(!is_null($request->photo)){
+        if (!is_null($request->photo)) {
             $update = $request->all();
             if ($logo = $request->file('photo')) {
                 $path = 'img/companies'; /* Ruta donde se guarda dentro del servidor*/
                 $logoCompany = time() . "." . $logo->getClientOriginalExtension(); /* Nomenclatura del archivo */
-                if($logo->move($path, $logoCompany)){
+                if ($logo->move($path, $logoCompany)) {
                     $update['photo'] = "$logoCompany";
                     unlink('img/companies/' . $company->photo);
-                }              
+                }
             }
         } else {
             $update =  $request->only(['name', 'description']);
@@ -133,5 +134,40 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect()->route('empresas.index');
+    }
+
+
+    //create company for recluters
+    public function recluter(Request $request)
+    {
+        return view('admin.company.recluter');
+    }
+
+    //store company for recluters
+    public function recluter_store(Request $request)
+    {
+        //Validate the request
+        $request->validate([
+            'name' => 'required',
+            'photo' => 'required|image|mimes:jpeg,png|max:4000',
+            'description' => 'required|min:10',
+            'user_id' => 'required'
+        ]);
+
+        $new_company = $request->all();
+
+        /* Proceso de carga de logo */
+        if ($logo = $request->file('photo')) {
+            $rutaGuardarImg = 'img/companies'; /* Ruta donde se guarda dentro del servidor*/
+            $logoCompany = time() . "." . $logo->getClientOriginalExtension(); /* Nomenclatura del archivo */
+            $logo->move($rutaGuardarImg, $logoCompany);
+            $new_company['photo'] = "$logoCompany";
+        }
+
+        $user = User::find($request->user_id);
+        $comp = Company::create($new_company);        
+        $user_update['company_id'] = $comp->id;
+        $user->update($user_update);
+        return redirect()->route('admin.dashboard');
     }
 }

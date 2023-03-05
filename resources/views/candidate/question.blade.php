@@ -70,8 +70,8 @@
                             <span id="countdown2"></span>
                         @else
                             <div>
-                                <video autoplay="" id="stream-elem" controls width="600" style="border-radius: 10px;"
-                                    height="400" muted>
+                                <video autoplay="" id="stream-elem" controls width="500" style="border-radius: 10px;"
+                                    height="300" muted>
                                     <source src="" type="">
                                 </video>
                             </div>
@@ -109,8 +109,8 @@
                                     <span id="countdown2"></span>
                                 @else
                                     <div>
-                                        <video autoplay="" id="stream-elem" controls width="600"
-                                            style="border-radius: 10px;" height="400">
+                                        <video autoplay="" id="stream-elem" controls width="500"
+                                            style="border-radius: 10px;" height="300">
                                             <source src="" type="" muted>
                                         </video>
                                     </div>

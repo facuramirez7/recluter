@@ -67,7 +67,7 @@
 
         <!-- SIDEBAR -->
         <div class="app-main">
-            @guest
+            @if (Auth::user()->company_id == null)
             @else
                 <div class="app-sidebar sidebar-shadow">
                     <div class="app-header__logo">
@@ -216,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-            @endguest
+            @endif
             <div class="app-main__outer">
                 <div class="app-main__inner">
                     <div class="app-page-title">
