@@ -47,7 +47,7 @@ startBtn.addEventListener('click', function (e) {
             newVideoEl.autoplay = true
             newVideoEl.controls = true
             newVideoEl.innerHTML = `<source src="${window.URL.createObjectURL(new Blob(blobContainer))}"
-             type="video/mp4">`
+             type="video/webm">`
             //document.body.removeChild(videoElem)
             //document.body.insertBefore(newVideoEl, startBtn);
 

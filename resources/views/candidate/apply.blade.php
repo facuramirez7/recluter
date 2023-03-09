@@ -22,6 +22,21 @@
         .R {
             height: 28px;
         }
+
+        .responsive-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 -> 9/16x100 */
+            overflow: hidden;
+        }
+
+        .responsive-video .video {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
 @endsection
 
@@ -44,16 +59,45 @@
                     <b>{{ $interview->position }}</b>.
                     El proceso consiste en un par de preguntas que deberás responder de forma verbal dentro del tiempo
                     determinado, también podremos solicitarte alguna respuesta por escrito o la realización de algún test.
-
                     El proceso es muy intuitivo y no durará más de 10 minutos, es necesario que dejes activado la cámara y
-
                     micrófono en todo el proceso, y que tengas tu CV en PDF (te pediremos que lo cargues).
-
                     Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente.
+                    Necesitamos que tengas una cámara y micrófono en todo momento disponible, para ello te pediremos los permisos de los mismos.
                     <br>
-                    Tiempo estimado para pensar: <b>{{ $interview->time_to_think}} segundos</b>
+                    Tiempo estimado para pensar: <b>{{ $interview->time_to_think }} segundos</b>
                     <br>
-                    Tiempo estimado para responder: <b>{{ $interview->time_to_reply}} segundos</b>  
+                    Tiempo estimado para responder: <b>{{ $interview->time_to_reply }} segundos</b>
+                    <br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal2"
+                        data-dismiss="modal">Aceptar y probar video <i class="fa-solid fa-check"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}" class="R"
+                            alt="R"></h5>
+                </div>
+                <div class="modal-body">
+                    <div id="container responsive-video">
+                        <video class="video" src="" id="localVideo" controls></video>
+                        <video class="video" src="" id="recordVideo" style="display: none;" controls>
+                        </video>
+                    </div>
+                    <button id="btn">Open</button>
+                    <button id="recordbtn" disabled>Record Start</button>
+                    <!-- <button id="stopRecording">stop</button> -->
+                    <button id="paused" disabled>Pause</button>
+                    <button id="Play" disabled>Play</button>
+                    <button id="mic">OFF</button>
+                    <button id="shareScreen">Share</button>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar <i
@@ -102,7 +146,7 @@
 
                 <input type="hidden" name="interview_id" value="{{ $interview->id }}">
 
-                <button type="submit" class="btn btn-success">EMPEZAR A CONTESTAR <i
+                <button type="submit" id="start" class="btn btn-success" disabled>EMPEZAR A CONTESTAR <i
                         class="fa-solid fa-hourglass-start"></i></button>
             </section>
         </form>
@@ -111,6 +155,10 @@
         <p>{{ $interview->position }}</p>
         <p><b>Descrpición:</b></p>
         <p>{{ $interview->description }}</p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary bt-4" data-toggle="modal" data-target="#exampleModal2">
+            <i class="fa-solid fa-video"></i> Prueba de Video
+        </button>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -124,4 +172,5 @@
             $(".modal-btn").trigger("click");
         };
     </script>
+    <script type="text/javascript" src="{{ asset('js/apply/video_proob.js') }}"></script>
 @endsection
