@@ -14,10 +14,7 @@ const shareScreen = document.getElementById("shareScreen")
 const DURATION = 5 * 1000
 
 constraints = {
-    video: {
-        width: { exact: 340 },
-        height: { exact: 300 }
-    },
+    video: true,
     audio: {
         echoCancellation: { exact: true }
     }
@@ -47,8 +44,8 @@ function recordedStart(e) {
 function recordedStop(e) {
     mediaRecorder.stop()
     paused.disabled = true
-    recordStart.textContent = "Record Start"
     playVideo.disabled = false
+    $("#recordbtn").prop("disabled", true); 
 }
 
 let localStream, mediaRecorder, storeBlob;
@@ -56,14 +53,15 @@ let localStream, mediaRecorder, storeBlob;
 
 // =========================Recording Stream start==================================
 recordStart.addEventListener("click", (e) => {
-    if (recordStart.textContent === "Record Start") {
+    if (recordStart.textContent === "Empezar a grabar") {
         recordedStart(e)
-        recordStart.textContent = "Stop Recording"
+        recordStart.textContent = 'Parar grabación'
+        $('#recordbtn').removeClass('btn-success').addClass('btn-danger'),
         paused.disabled = false
 
     }
     else {
-        recordStart.textContent = "Record Start"
+        recordStart.textContent = 'Empezar a grabar'
         recordedStop(e)
     }
 })
@@ -76,7 +74,7 @@ btn.onclick = async function (e) {
 
 
     if (navigator.mediaDevices == undefined) {
-        alert("your browser not supported media devices")
+        alert("Your browser not supported media devices")
     }
     try {
         console.log(await navigator.mediaCapabilities)
@@ -134,6 +132,7 @@ playVideo.addEventListener("click", (e) => {
         recordedVideo.src = window.URL.createObjectURL(blob)
         recordedVideo.play()
         recordedVideo.style.display = "block"
+        localVideo.style.display = "none"
     } catch (err) {
         console.log(err)
 
@@ -149,28 +148,3 @@ endedVideo.addEventListener("click", (e) => {
     }
 })
 
-//========================Screen Share=================
-shareScreen.addEventListener("click", async (e) => {
-    try {
-        const constaints = {
-            width: { exact: 300 },
-            height: { exact: 350 }
-        }
-        const stream = await navigator.mediaDevices.getDisplayMedia(constaints)
-        localStream = stream
-        console.log(stream)
-        const video = document.createElement("video")
-        video.id = "share"
-        video.style.display = stream.active ? "block" : document.removeChild("video")
-        video.srcObject = stream
-        video.width = "300"
-        video.height = "400"
-        video.play()
-        Container.appendChild(video)
-        stream.getVideoTracks()[0].addEventListener("ended", (e) => {
-            alert("screen share is ended")
-        })
-    } catch (err) {
-        console.log(err)
-    }
-})

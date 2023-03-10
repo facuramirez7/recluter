@@ -17,6 +17,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    {{-- CSS --}}
+    @yield('css')
 </head>
 <body>
     <div id="app">

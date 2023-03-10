@@ -79,5 +79,11 @@ startBtn.addEventListener('click', function (e) {
 
 })
 
+endBtn.addEventListener('click', function (e) {
+    console.log('Entra')
+    videoElem.pause();
+    recorder.stop();
+})
+
 
 

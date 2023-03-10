@@ -12,7 +12,8 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/interview/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/apply/apply.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <script src="https://kit.fontawesome.com/e948f2dbbf.js" crossorigin="anonymous"></script>
     <style>
         * {
@@ -23,19 +24,14 @@
             height: 28px;
         }
 
-        .responsive-video {
-            position: relative;
-            padding-bottom: 56.25%;
-            /* 16:9 -> 9/16x100 */
-            overflow: hidden;
+        .video {
+            width: 465px;
+            height: 300px;
         }
 
-        .responsive-video .video {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+        .video-recorded {
+            width: 465px;
+            height: 300px;
         }
     </style>
 @endsection
@@ -62,7 +58,8 @@
                     El proceso es muy intuitivo y no durará más de 10 minutos, es necesario que dejes activado la cámara y
                     micrófono en todo el proceso, y que tengas tu CV en PDF (te pediremos que lo cargues).
                     Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente.
-                    Necesitamos que tengas una cámara y micrófono en todo momento disponible, para ello te pediremos los permisos de los mismos.
+                    Necesitamos que tengas una cámara y micrófono en todo momento disponible, para ello te pediremos los
+                    permisos de los mismos.
                     <br>
                     Tiempo estimado para pensar: <b>{{ $interview->time_to_think }} segundos</b>
                     <br>
@@ -70,8 +67,8 @@
                     <br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal2"
-                        data-dismiss="modal">Aceptar y probar video <i class="fa-solid fa-check"></i></button>
+                    <button type="button" class="btn btn-recluter" data-toggle="modal" data-target="#exampleModal2"
+                        data-dismiss="modal">Probar video <i class="fa-solid fa-video"></i></button>
                 </div>
             </div>
         </div>
@@ -85,23 +82,26 @@
                     <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}" class="R"
                             alt="R"></h5>
                 </div>
-                <div class="modal-body">
-                    <div id="container responsive-video">
-                        <video class="video" src="" id="localVideo" controls></video>
-                        <video class="video" src="" id="recordVideo" style="display: none;" controls>
+                <div class="modal-body row justify-content-center">
+                    <div id="responsive-video">
+                        <video class="video" muted src="" id="localVideo" controls></video>
+                        <video class="video-recorded" src="" id="recordVideo" style="display: none;" controls>
                         </video>
                     </div>
-                    <button id="btn">Open</button>
-                    <button id="recordbtn" disabled>Record Start</button>
-                    <!-- <button id="stopRecording">stop</button> -->
-                    <button id="paused" disabled>Pause</button>
-                    <button id="Play" disabled>Play</button>
-                    <button id="mic">OFF</button>
-                    <button id="shareScreen">Share</button>
+                    <div class="mt-4 ">
+                        <button id="btn" class="btn btn-info">Autorizar</button>
+                        <button id="recordbtn" class="btn btn-success" disabled>Empezar a grabar</button>
+                        <!-- <button id="stopRecording">stop</button> -->
+                        <button id="paused" class="btn btn-danger" style="display: none;" disabled><i class="fa-solid fa-pause"></i></button>
+                        <button id="Play" class="btn btn-success" disabled><i class="fa-solid fa-play"></i></button>
+                        {{-- <button id="mic"><i class="fa-solid fa-microphone-slash"></i></button> --}}
+                        {{-- <button id="shareScreen">Share</button> --}}
+                    </div>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal">Aceptar <i
-                            class="fa-solid fa-check"></i></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                            class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
         </div>
@@ -133,8 +133,8 @@
                     required value="{{ old('surname') }}">
 
                 <label for="email">Email</label>
-                <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.." required
-                    value="{{ old('email') }}">
+                <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
+                    required value="{{ old('email') }}">
 
                 <label for="country">País</label>
                 <input name="country" id="country" type="text" class="form-control mb-4"
@@ -146,7 +146,7 @@
 
                 <input type="hidden" name="interview_id" value="{{ $interview->id }}">
 
-                <button type="submit" id="start" class="btn btn-success" disabled>EMPEZAR A CONTESTAR <i
+                <button type="submit" id="start" class="btn btn-recluter" disabled>Comenzar <i
                         class="fa-solid fa-hourglass-start"></i></button>
             </section>
         </form>
@@ -156,7 +156,7 @@
         <p><b>Descrpición:</b></p>
         <p>{{ $interview->description }}</p>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary bt-4" data-toggle="modal" data-target="#exampleModal2">
+        <button type="button" class="btn btn-recluter bt-4" data-toggle="modal" data-target="#exampleModal2">
             <i class="fa-solid fa-video"></i> Prueba de Video
         </button>
 

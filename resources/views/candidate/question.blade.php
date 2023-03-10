@@ -8,14 +8,10 @@
     $time = time();
 @endphp
 
-@section('title')
-    <title>Entrevista</title>
-@endsection
-
 @section('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/interview/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <script src="https://kit.fontawesome.com/e948f2dbbf.js" crossorigin="anonymous"></script>
     <style>
         * {
@@ -82,7 +78,7 @@
                             <br>
                             <span id="countdown2"></span>
                             <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
-                            <button type="button" class="d-none" id="stop-media">Parar grabación</button>
+                            {{-- <button type="button" class="d-none" id="stop-media">Parar grabación</button> --}}
                             <br>
                             <input type="hidden" name="answer" value="{{ $time }}">
                         @endif
@@ -121,17 +117,26 @@
                                     <br>
                                     <span id="countdown2"></span>
                                     <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
-                                    <button type="button" class="d-none" id="stop-media">Parar grabación</button>
+                                    {{-- <button type="button" class="d-none" id="stop-media">Parar grabación</button> --}}
                                     <input type="hidden" name="answer" value="{{ $time }}">
                                     <br>
                                 @endif
             @endif
-            <button type="submit" id="next" class="btn btn-secondary mt-4 d-none">SIGUIENTE PREGUNTA <i
+            {{-- Boton para parar el video y avanzar si es con video --}}
+            <button type="button" id="stop-media" class="btn btn-recluter mt-4 d-none">SIGUIENTE PREGUNTA <i
                     class="fa-solid fa-forward"></i></button>
+            <br>
+            {{-- Boton para parar avanzar si no es con video --}}
+            <button type="submit" id="next" class="btn btn-recluter mt-4 d-none">SIGUIENTE PREGUNTA <i
+                    class="fa-solid fa-forward"></i></button>
+
             </section>
             </form>
         </div>
     </div>
+    <script LANGUAGE="JavaScript">
+        history.forward()
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -165,6 +170,7 @@
             }
             //dividir por 6 a danger y por 3 a warning (colores del conteo)
             var totalTime2 = {{ $time_to_reply }};
+            var tenSecondsPast = {{ $time_to_reply }} - 5;
             var warning = {{ $time_to_reply }} / 3;
             var danger = {{ $time_to_reply }} / 6;
 
@@ -173,6 +179,10 @@
                 if (totalTime2 == 0) {
                     console.log('Empieza la respuesta.');
                     $("#next").trigger("click");
+                } else if (totalTime2 == tenSecondsPast) {
+                    totalTime2 -= 1;
+                    setTimeout("updateClock2()", 1000);
+                    $("#next").removeClass("d-none");
                 } else if (totalTime2 == warning) {
                     totalTime2 -= 1;
                     setTimeout("updateClock2()", 1000);
@@ -212,6 +222,7 @@
             }
             //dividir por 6 a danger y por 3 a warning (colores del conteo)
             var totalTime2 = {{ $time_to_reply }};
+            var tenSecondsPast = {{ $time_to_reply }} - 5;
             var warning = {{ $time_to_reply }} / 3;
             var danger = {{ $time_to_reply }} / 6;
 
@@ -222,6 +233,10 @@
                     videoElem.pause();
                     recorder.stop();
                     //$("#next").trigger("click");
+                } else if (totalTime2 == tenSecondsPast) {
+                    totalTime2 -= 1;
+                    setTimeout("updateClock2()", 1000);
+                    $("#stop-media").removeClass("d-none");
                 } else if (totalTime2 == warning) {
                     totalTime2 -= 1;
                     setTimeout("updateClock2()", 1000);
