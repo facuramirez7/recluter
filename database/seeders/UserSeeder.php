@@ -18,33 +18,38 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Administrator',
             'email' => 'admin@example.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('rECLUTER01T'),
+            //'password' => bcrypt('12345678'),
         ])->assignRole('Admin');
 
         User::create([
             'name' => 'Recluter',
             'email' => 'recluter@example.com',
             'company_id' => 1,
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('rECLUTER01T'),
+            //'password' => bcrypt('12345678'),
         ])->assignRole('Recluter');
 
         User::create([
             'name' => 'Recluter2',
             'email' => 'recluter2@example.com',
             'company_id' => 2,
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('rECLUTER01T'),
+            //'password' => bcrypt('12345678'),
         ])->assignRole('Recluter');
 
         User::create([
             'name' => 'Candidate',
             'email' => 'candidate@example.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('rECLUTER01T'),
+            //'password' => bcrypt('12345678'),
         ])->assignRole('Candidate');
 
         User::create([
             'name' => 'Candidate2',
             'email' => 'candidate2@example.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('rECLUTER01T'),
+            //'password' => bcrypt('12345678'),
         ])->assignRole('Candidate');
     }
 }
