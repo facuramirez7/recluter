@@ -32,7 +32,7 @@ Route::resources([
     'cuestionarios' => QuestionController::class
 ]);
 
-Route::get('/admin/dashboard', function () {return view('admin.dashboard');})->name('admin.dashboard');
+Route::get('/admin/dashboard', [UserController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/candidatura/{user}', [InterviewController::class, 'candidancie'])->name('candidatura');
 Route::get('/candidatos', [UserController::class, 'candidates'])->name('candidatos');
 

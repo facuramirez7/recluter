@@ -67,7 +67,7 @@
 
         <!-- SIDEBAR -->
         <div class="app-main">
-            @if (Auth::user()->company_id == null)
+            @if (Auth::user()->company_id == null && !Auth::user()->roles->pluck('name')->contains('Admin'))
             @else
                 <div class="app-sidebar sidebar-shadow">
                     <div class="app-header__logo">
