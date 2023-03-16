@@ -2,7 +2,7 @@ const videoElem = document.getElementById('stream-elem')
 
 var startBtn = document.getElementById('start-stream')
 var endBtn = document.getElementById('stop-media')
-
+var myDomain = location.hostname;
 var recorder;
 
 const settings = {
@@ -14,6 +14,7 @@ startBtn.addEventListener('click', function (e) {
     navigator.mediaDevices.getUserMedia(settings).then((stream) => {
         console.log(stream);
         console.log('start-stream');
+        console.log(myDomain);
         console.log(endBtn);
         videoElem.srcObject = stream
 
@@ -56,24 +57,44 @@ startBtn.addEventListener('click', function (e) {
             formdata.append('time', time);
             //alert(formdata)
 
+            if (myDomain == 'localhost') {
+                fetch('http://localhost:8000/guardar-video', {
+                    headers: {
+                        'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
+                    },
+                    method: 'POST',
+                    body: formdata
+                }).then(response => response.json())
+                    .then(function (data) {
+                        if (data.status == 'ok') {
+                            console.log('Se subió correctamente');
+                            $("#next").trigger("click");
+                        } else {
+                            console.log('Error');
+                            alert('Error al subir el video, por favor grabe de vuelta.');
+                            location.reload();
+                        }
+                    });
+            } else {
+                fetch('https://recluter.com/guardar-video', {
+                    headers: {
+                        'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
+                    },
+                    method: 'POST',
+                    body: formdata
+                }).then(response => response.json())
+                    .then(function (data) {
+                        if (data.status == 'ok') {
+                            console.log('Se subió correctamente');
+                            $("#next").trigger("click");
+                        } else {
+                            console.log('Error');
+                            alert('Error al subir el video, por favor grabe de vuelta.');
+                            location.reload();
+                        }
+                    });
+            }
 
-            fetch('http://localhost:8000/guardar-video', {
-                headers: {
-                    'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
-                },
-                method: 'POST',
-                body: formdata
-            }).then(response => response.json())
-                .then(function (data) {
-                    if (data.status == 'ok') {
-                        console.log('Se subió correctamente');
-                        $("#next").trigger("click");
-                    } else {
-                        console.log('Error');
-                        alert('Error al subir el video, por favor grabe de vuelta.');
-                        location.reload();
-                    }
-                });
         }
     })
 
