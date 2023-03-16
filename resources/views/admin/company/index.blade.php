@@ -143,7 +143,7 @@
 
                         Swal.fire({
                             title: '¿Estás segur@?',
-                            text: "No podrás revertir esta acción",
+                            text: "No podrás revertir esta acción. Se eliminarán los usuarios, entrevistas y candidaturas de esta empresa.",
                             icon: 'warning',
                             iconColor: '#D92550',
                             confirmButtonText: 'Eliminar empresa',

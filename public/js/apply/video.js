@@ -46,6 +46,7 @@ startBtn.addEventListener('click', function (e) {
             newVideoEl.width = '600'
             newVideoEl.radius = '10'
             newVideoEl.autoplay = true
+            newVideoEl.muted = true
             newVideoEl.controls = true
             newVideoEl.innerHTML = `<source src="${window.URL.createObjectURL(new Blob(blobContainer))}"
              type="video/webm">`
@@ -93,8 +94,7 @@ startBtn.addEventListener('click', function (e) {
                             location.reload();
                         }
                     });
-            }
-
+            } 
         }
     })
 

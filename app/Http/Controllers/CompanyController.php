@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Interview;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -131,8 +132,21 @@ class CompanyController extends Controller
             unlink($img);
         }
 
-        $company->delete();
+        
 
+        $interviews = Interview::where('company_id', '=', $id)->get();
+        
+        foreach ($interviews as $interview) {
+            foreach ($interview->question as $question) {
+                foreach ($question->questionAnswered as $answer) {
+                    $answer->delete();
+                }
+                $question->delete();
+            }
+            $interview->delete();
+        }
+        $company->delete();
+        User::where('company_id', '=', $id)->delete();
         return redirect()->route('empresas.index');
     }
 
@@ -165,7 +179,7 @@ class CompanyController extends Controller
         }
 
         $user = User::find($request->user_id);
-        $comp = Company::create($new_company);        
+        $comp = Company::create($new_company);
         $user_update['company_id'] = $comp->id;
         $user->update($user_update);
         return redirect()->route('admin.dashboard');
