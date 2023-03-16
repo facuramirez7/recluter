@@ -83,15 +83,10 @@ class InterviewController extends Controller
 
             #por cada input que viene de la plantilla se crea una pregunta con el id de la entrevista creada
             for ($i = 0; $i < 5; $i++) {
-                if (!isset($request->video[$i])) {
-                    $video = 0;
-                } else {
-                    $video = 1;
-                }
                 Question::create([
                     'question' => $request->question[$i],
                     'interview_id' => $new_interview->id,
-                    'video' => $video,
+                    'video' => $request->video[$i],
                 ]);
             }
             return redirect()->route('entrevistas.index');
@@ -164,19 +159,19 @@ class InterviewController extends Controller
             'name' => 'required|max:50',
             'email' => 'required|max:100|email',
             'surname' => 'required|max:50',
-            'country' => 'required|max:50',
+            'domicile' => 'required|max:100',
             'date_of_birth' => 'required|date|before:01/01/2010'
         ]);
         $user = User::where('email', '=', $request->email)->first();
         if (isset($user)) {
-            $user_update = $request->only(['name', 'surname', 'country']);
+            $user_update = $request->only(['name', 'surname', 'domicile']);
             $user_update['company_id'] = $interview->company_id;
             $user->update($user_update);
         } else {
             $user = User::create([
                 'name' => $request->name,
                 'surname' => $request->surname,
-                'country' => $request->country,
+                'domicile' => $request->domicile,
                 'date_of_birth' => $request->date_of_birth,
                 'company_id' => $interview->company_id,
                 'email' => $request->email,

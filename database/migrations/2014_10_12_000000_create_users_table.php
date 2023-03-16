@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname')->nullable();
-            $table->string('country')->nullable();
+            $table->string('domicile')->nullable();
             $table->date('date_of_birth')->nullable(); 
             $table->unsignedBigInteger('company_id')->nullable();
             $table->string('email')->unique();

@@ -56,15 +56,8 @@
                     El proceso consiste en un par de preguntas que deberás responder de forma verbal dentro del tiempo
                     determinado, también podremos solicitarte alguna respuesta por escrito o la realización de algún test.
                     El proceso es muy intuitivo y no durará más de 10 minutos, es necesario que dejes activado la cámara y
-                    micrófono en todo el proceso, y que tengas tu CV en PDF (te pediremos que lo cargues).
-                    Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente.
-                    Necesitamos que tengas una cámara y micrófono en todo momento disponible, para ello te pediremos los
-                    permisos de los mismos.
-                    <br>
-                    Tiempo estimado para pensar: <b>{{ $interview->time_to_think }} segundos</b>
-                    <br>
-                    Tiempo estimado para responder: <b>{{ $interview->time_to_reply }} segundos</b>
-                    <br>
+                    micrófono en todo el proceso.
+                    Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente. Éxitos!
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-recluter" data-toggle="modal" data-target="#exampleModal2"
@@ -136,9 +129,9 @@
                 <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
                     required value="{{ old('email') }}">
 
-                <label for="country">País</label>
-                <input name="country" id="country" type="text" class="form-control mb-4"
-                    placeholder="Lugar de Residencia.." required value="{{ old('country') }}">
+                <label for="domicile">Domicilio</label>
+                <input name="domicile" id="domicile" type="text" class="form-control mb-4"
+                    placeholder="Lugar de Residencia.." required value="{{ old('domicile') }}">
 
                 <label for="date_of_birth">Fecha de Nacimiento</label>
                 <input name="date_of_birth" id="date_of_birth" type="date" class="form-control mb-4"

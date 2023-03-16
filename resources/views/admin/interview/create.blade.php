@@ -39,14 +39,14 @@
             <div class="col-md-6">
                 <label for="time_to_think">Tiempo para pensar la respuesta</label> <br>
                 <select name="time_to_think" class="custom-select col-6 mb-4" id="">
-                    <option value="15" selected>15 Segundos</option>
+                    <option value="5" selected>5 Segundos</option>
+                    <option value="15">15 Segundos</option>
                     <option value="30">30 Segundos</option>
-                    <option value="60">60 Segundos</option>
                 </select>
             </div>
             <div class="col-md-6">
                 <label for="time_to_reply">Tiempo para responder</label> <br>
-                <select name="time_to_reply" class="custom-select col-6 mb-4" id="">
+                <select name="time_to_reply" class="custom-select col-6 mb-4 ml-2">
                     <option value="30" selected>30 Segundos</option>
                     <option value="60">60 Segundos</option>
                     <option value="120">120 Segundos</option>
@@ -70,8 +70,11 @@
                     <label for="question{{ $i }}">{{ $i + 1 }}° pregunta para la entrevista</label>
                     <input name="question[]" id="question{{ $i }}" type="text" class="form-control mb-4"
                         placeholder="Escriba la pregunta que quiere realizar.." required value="{{ old("question.$i") }}">
-                    <label for="question{{ $i }}">¿La respuesta precisa de video? </label>
-                    <input type="checkbox" value="0" name="video[{{ $i }}]">
+                    <label for="video[{{ $i }}]">Modo de respuesta </label>
+                    <select name="video[]" class="custom-select col-2 ml-2">
+                        <option value="0" selected>Escrito</option>
+                        <option value="1">Video</option>
+                    </select>
                 </section>
             @endfor
             <label for="goodbye">Mensaje de despedida</label>

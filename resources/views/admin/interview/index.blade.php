@@ -70,7 +70,7 @@
                                     <a class="mr-1" href="/entrevistas/{{ $interview->id }}"> <button type="button"
                                             class="btn btn-warning" data-toggle="tooltip" data-placement="top"
                                             title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
-                                    <a class="mr-1" href="/entrevistas/{{ $interview->id }}/edit"> <button type="button"
+                                    {{-- <a class="mr-1" href="/entrevistas/{{ $interview->id }}/edit"> <button type="button"
                                             class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Editar">
                                             <i class="fas fa-edit"></i> </button></a>
                                     <form action="{{ route('entrevistas.destroy', $interview->id) }}" method="POST"
@@ -80,7 +80,7 @@
                                         <button type="submit" class="btn btn-danger" data-toggle="tooltip"
                                             data-placement="top" title="Eliminar"><i
                                                 class="far fa-trash-alt"></i></i></button>
-                                    </form>
+                                    </form> --}}
                                 </div>
                             </td>
                         </tr>
