@@ -61,7 +61,7 @@
                             <td>{{ substr($interview->description, 0, 100) }}..</td>
                             <td>
                                 <div class="row justify-content-center">
-                                    <input type="text" value="http://localhost:8000/aplicar/{{ $interview->id }}"
+                                    <input type="text" value="{{$_SERVER['SERVER_NAME']}}/aplicar/{{ $interview->id }}"
                                         id="target-{{ $interview->id }}" style="display: none;" readonly>
                                     <a class="mr-1" onclick="copiar('target-{{ $interview->id }}')"> <button
                                             type="button" class="btn btn-secondary" data-toggle="tooltip"
