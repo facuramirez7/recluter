@@ -21,25 +21,40 @@
 @endsection
 
 @section('content-title')
-    {{ $user->name }}
+    {{ $user->name }} {{ $user->surname }}
 @endsection
 
 @section('content-subtitle')
-    {{ $user->email }}
+    Mail: {{ $user->email }}
+    <br>
+    Teléfono: {{ $user->phone }}
+    <br>
+    Domicilio: {{ $user->domicile }}
+    <br>
+    Nacimiento: {{ $user->date_of_birth }}
 @endsection
 
 @section('content')
+    @php
+        $i = 1;
+    @endphp
     <div class="main-card mb-3 card">
         <div class="card-body">
             @foreach ($answereds as $answer)
                 @if ($answer->question->video == 0)
-                    <p class="mb-2"><b>{{ $answer->question->question }}</b></p>
+                    <p class="mb-2"><b>{{ $i . '.' . $answer->question->question }}</b></p>
                     <p class="mb-4">{{ $answer->answer }}</p>
+                    @php
+                        $i++;
+                    @endphp
                 @else
-                    <p class="mb-2"><b>{{ $answer->question->question }}</b></p>
-                    <video id="stream-elem" controls width="600" style="border-radius: 10px;"
-                        height="400" class="mb-4">
-                        <source src="{{asset('video/answer/'.$answer->answer)}}" type="video/webm">
+                    <p class="mb-2"><b>{{ $i . '.' . $answer->question->question }}</b></p>
+                    @php
+                        $i++;
+                    @endphp
+                    <video id="stream-elem" controls width="600" style="border-radius: 10px;" height="400"
+                        class="mb-4">
+                        <source src="{{ asset('video/answer/' . $answer->answer) }}" type="video/webm">
                     </video>
                 @endif
             @endforeach

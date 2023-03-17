@@ -106,7 +106,7 @@
                                 @else
                                     <div>
                                         <video autoplay="" id="stream-elem" controls width="500"
-                                            style="border-radius: 10px;" height="300">
+                                            style="border-radius: 10px;" height="300" muted>
                                             <source src="" type="" muted>
                                         </video>
                                     </div>

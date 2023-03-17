@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('company_id')->unsigned();
             $table->smallInteger('time_to_think');
             $table->smallInteger('time_to_reply');
-            $table->string('goodbye', 100);
+            $table->string('goodbye', 200);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');

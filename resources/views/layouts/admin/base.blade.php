@@ -67,7 +67,8 @@
 
         <!-- SIDEBAR -->
         <div class="app-main">
-            @if (Auth::user()->company_id == null && !Auth::user()->roles->pluck('name')->contains('Admin'))
+            @if (Auth::user()->company_id == null &&
+                    !Auth::user()->roles->pluck('name')->contains('Admin'))
             @else
                 <div class="app-sidebar sidebar-shadow">
                     <div class="app-header__logo">
@@ -105,7 +106,12 @@
                     <div class="scrollbar-sidebar">
                         <div class="app-sidebar__inner">
                             <ul class="vertical-nav-menu">
-
+                                <li class="app-sidebar__heading">Inicio</li>
+                                <li>
+                                    <a href="/admin/dashboard">
+                                        <i class="metismenu-icon fa-solid fa-chart-line"></i>Dashboard
+                                    </a>
+                                </li>
                                 <li class="app-sidebar__heading">Entidades</li>
                                 @can('admin.usuarios.index')
                                     <li>

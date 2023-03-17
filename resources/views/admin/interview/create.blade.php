@@ -29,6 +29,15 @@
     <form action="{{ route('entrevistas.store') }}" method="POST" id="agregar-entrevista" class="col-md-10 mx-auto"
         enctype='multipart/form-data'>
         @csrf
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <label for="position">Nombre del puesto</label>
         <input name="position" id="position" type="text" class="form-control mb-4"
             placeholder="Introduzca el nombre del puesto para la entrevista.." required value="{{ old('position') }}">

@@ -103,7 +103,7 @@ class InterviewController extends Controller
      */
     public function show(Interview $interview)
     {
-        //
+        return view('admin.interview.show')->with('interview', $interview);
     }
 
     /**
@@ -160,6 +160,7 @@ class InterviewController extends Controller
             'email' => 'required|max:100|email',
             'surname' => 'required|max:50',
             'domicile' => 'required|max:100',
+            'phone' => 'required|max:50',
             'date_of_birth' => 'required|date|before:01/01/2010'
         ]);
         $user = User::where('email', '=', $request->email)->first();
@@ -172,6 +173,7 @@ class InterviewController extends Controller
                 'name' => $request->name,
                 'surname' => $request->surname,
                 'domicile' => $request->domicile,
+                'phone' => $request->phone,
                 'date_of_birth' => $request->date_of_birth,
                 'company_id' => $interview->company_id,
                 'email' => $request->email,

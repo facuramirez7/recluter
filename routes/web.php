@@ -34,6 +34,7 @@ Route::resources([
 
 Route::get('/admin/dashboard', [UserController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/candidatura/{user}', [InterviewController::class, 'candidancie'])->name('candidatura');
+Route::get('/entrevista/{interview}', [InterviewController::class, 'show'])->name('show.entrevista');
 Route::get('/candidatos', [UserController::class, 'candidates'])->name('candidatos');
 
 

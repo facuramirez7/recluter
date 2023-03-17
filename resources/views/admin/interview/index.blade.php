@@ -61,13 +61,13 @@
                             <td>{{ substr($interview->description, 0, 100) }}..</td>
                             <td>
                                 <div class="row justify-content-center">
-                                    <input type="text" value="{{$_SERVER['SERVER_NAME']}}/aplicar/{{ $interview->id }}"
+                                    <input type="text" value="{{ $_SERVER['SERVER_NAME'] }}/aplicar/{{ $interview->id }}"
                                         id="target-{{ $interview->id }}" style="display: none;" readonly>
                                     <a class="mr-1" onclick="copiar('target-{{ $interview->id }}')"> <button
                                             type="button" class="btn btn-secondary" data-toggle="tooltip"
                                             data-placement="top" title="Copiar link"> <i class="fa-solid fa-link"></i>
                                         </button></a>
-                                    <a class="mr-1" href="/entrevistas/{{ $interview->id }}"> <button type="button"
+                                    <a class="mr-1" href="/entrevista/{{ $interview->id }}"> <button type="button"
                                             class="btn btn-warning" data-toggle="tooltip" data-placement="top"
                                             title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
                                     {{-- <a class="mr-1" href="/entrevistas/{{ $interview->id }}/edit"> <button type="button"

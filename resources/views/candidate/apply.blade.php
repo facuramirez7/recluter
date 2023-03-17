@@ -85,7 +85,8 @@
                         <button id="btn" class="btn btn-info">Autorizar</button>
                         <button id="recordbtn" class="btn btn-success" disabled>Empezar a grabar</button>
                         <!-- <button id="stopRecording">stop</button> -->
-                        <button id="paused" class="btn btn-danger" style="display: none;" disabled><i class="fa-solid fa-pause"></i></button>
+                        <button id="paused" class="btn btn-danger" style="display: none;" disabled><i
+                                class="fa-solid fa-pause"></i></button>
                         <button id="Play" class="btn btn-success" disabled><i class="fa-solid fa-play"></i></button>
                         {{-- <button id="mic"><i class="fa-solid fa-microphone-slash"></i></button> --}}
                         {{-- <button id="shareScreen">Share</button> --}}
@@ -129,12 +130,16 @@
                 <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
                     required value="{{ old('email') }}">
 
+                <label for="phone">Número de telefono</label>
+                <input name="phone" id="phone" type="number" class="form-control mb-4"
+                    placeholder="Númer de telefono.." required value="{{ old('phone') }}">
+
                 <label for="domicile">Domicilio</label>
                 <input name="domicile" id="domicile" type="text" class="form-control mb-4"
                     placeholder="Lugar de Residencia.." required value="{{ old('domicile') }}">
 
                 <label for="date_of_birth">Fecha de Nacimiento</label>
-                <input name="date_of_birth" id="date_of_birth" type="date" class="form-control mb-4"
+                <input name="date_of_birth"  max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date" class="form-control mb-4"
                     placeholder="Fecha de Nacimiento.." value="{{ old('date_of_birth') }}">
 
                 <input type="hidden" name="interview_id" value="{{ $interview->id }}">
