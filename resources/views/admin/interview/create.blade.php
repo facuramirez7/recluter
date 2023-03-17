@@ -41,7 +41,7 @@
         <label for="position">Nombre del puesto</label>
         <input name="position" id="position" type="text" class="form-control mb-4"
             placeholder="Introduzca el nombre del puesto para la entrevista.." required value="{{ old('position') }}">
-        <label for="description">Descripión</label>
+        <label for="description">Descripción</label>
         <textarea rows="1" placeholder="Ingrese una descripción del puesto.." class="form-control autosize-input mb-4"
             style="height: 77px;" name="description" idea id="description" required></textarea>
         <div class="form-row">
@@ -80,9 +80,9 @@
                     <input name="question[]" id="question{{ $i }}" type="text" class="form-control mb-4"
                         placeholder="Escriba la pregunta que quiere realizar.." required value="{{ old("question.$i") }}">
                     <label for="video[{{ $i }}]">Modo de respuesta </label>
-                    <select name="video[]" class="custom-select col-2 ml-2">
-                        <option value="0" selected>Escrito</option>
-                        <option value="1">Video</option>
+                    <select name="video[]" class="custom-select col-2 ml-2">       
+                        <option value="1" selected>Video</option> 
+                        <option value="0" >Escrito</option>
                     </select>
                 </section>
             @endfor

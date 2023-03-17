@@ -38,6 +38,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Email</th>
                         @if (auth()->user()->roles->pluck('name')->contains('Admin'))
@@ -53,6 +54,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
+                            <td>{{ $user->surname }} </td>
                             <td>{{ $user->name }} </td>
                             <td>{{ $user->email }}</td>
                             @if (auth()->user()->roles->pluck('name')->contains('Admin'))

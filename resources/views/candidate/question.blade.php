@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/apply/question.css') }}">
     <script src="https://kit.fontawesome.com/e948f2dbbf.js" crossorigin="anonymous"></script>
     <style>
         * {
@@ -19,12 +20,12 @@
         }
 
         span {
-            font-size: 25px;
+            font-size: 18px;
         }
 
         #countdown,
         #countdown2 {
-            font-size: 98px;
+            font-size: 70px;
         }
     </style>
 @endsection
@@ -32,69 +33,71 @@
 @section('content')
     <div class="container justify-content-center align-items-center">
         <div class="col-auto text-center">
-            <h1>{{ $company->name }}<img src="/img/companies/{{ $company->photo }}" alt=""
-                    style="max-height: 100px; border-radius: 100px;margin-left: 25px;"></h1>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (!isset($last))
-                {{-- If is not the last question --}}
-                <form action="{{ route('responder_pregunta') }}" method="POST" id="agregar-respuesta"
-                    class="col-md-10 mx-auto" enctype='multipart/form-data'>
-                    @csrf
-                    <section id="" class="card-body">
+            <div class="card bg-light mb-3 ">
+                <div class="card-header">{{ $company->name }} <img class="logo" src="/img/companies/{{ $company->photo }}"
+                        alt="" style="border-radius: 100px;margin-left: 25px;"></div>
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-file-circle-question text-recluter"></i>
+                        {{ $question->question }}</b></h5>
 
-                        <h4><b>{{ $question->question }}</b></h4>
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                        <input type="hidden" name="question_id" value="{{ $question->id }}">
 
-                        @if ($question->video == 0)
-                            <label for="answer">Respuesta</label>
-                            <textarea disabled rows="1" placeholder="Ingrese su respuesta aquí, no exceda los 1000 caracteres.."
-                                class="form-control autosize-input" style="height: 77px;" name="answer" idea id="answer"></textarea>
-                            <span id="span">Prepárate! El tiempo corre en: </span>
-                            <br>
-                            <span id="countdown"></span>
-                            <span id="span2">Tienes tiempo hasta: </span>
-                            <br>
-                            <span id="countdown2"></span>
-                        @else
-                            <div>
-                                <video autoplay="" id="stream-elem" controls width="500" style="border-radius: 10px;"
-                                    height="300" muted>
-                                    <source src="" type="">
-                                </video>
-                            </div>
-                            <span id="span">Prepárate! La grabación empezará en: </span>
-                            <br>
-                            <span id="countdown"></span>
-                            <span id="span2">La grabación termina en: </span>
-                            <br>
-                            <span id="countdown2"></span>
-                            <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
-                            {{-- <button type="button" class="d-none" id="stop-media">Parar grabación</button> --}}
-                            <br>
-                            <input type="hidden" name="answer" value="{{ $time }}">
-                        @endif
-                    @else
-                        {{-- If is the last question --}}
-                        <form action="{{ route('responder_pregunta.final') }}" method="POST" id="agregar-respuesta"
+                    {{--             <h1 class="title">{{ $company->name }}<img class="logo" src="/img/companies/{{ $company->photo }}" alt=""
+                    style="border-radius: 100px;margin-left: 25px;"></h1> --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if (!isset($last))
+                        {{-- If is not the last question --}}
+                        <form action="{{ route('responder_pregunta') }}" method="POST" id="agregar-respuesta"
                             class="col-md-10 mx-auto" enctype='multipart/form-data'>
                             @csrf
-                            <section id="" class="card-body">
+                            <h4 class="question"><b></h4>
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                            <input type="hidden" name="question_id" value="{{ $question->id }}">
 
-                                <h4><b>{{ $question->question }}</b></h4>
+                            @if ($question->video == 0)
+                                <textarea disabled rows="1" placeholder="Ingrese su respuesta aquí, no exceda los 1000 caracteres.."
+                                    class="form-control autosize-input" style="height: 77px;" name="answer" idea id="answer"></textarea>
+                                <span id="span">Prepárate! El tiempo corre en: </span>
+                                <br>
+                                <span id="countdown"></span>
+                                <span id="span2">Tienes tiempo hasta: </span>
+                                <br>
+                                <span id="countdown2"></span>
+                            @else
+                                <div>
+                                    <video autoplay="" id="stream-elem" controls width="450"
+                                        style="border-radius: 10px;" height="250" muted>
+                                        <source src="" type="">
+                                    </video>
+                                </div>
+                                <span id="span">Prepárate! La grabación empezará en: </span>
+                                <br>
+                                <span id="countdown"></span>
+                                <span id="span2">La grabación termina en: </span>
+                                <br>
+                                <span id="countdown2"></span>
+                                <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
+                                {{-- <button type="button" class="d-none" id="stop-media">Parar grabación</button> --}}
+                                <br>
+                                <input type="hidden" name="answer" value="{{ $time }}">
+                            @endif
+                        @else
+                            {{-- If is the last question --}}
+                            <form action="{{ route('responder_pregunta.final') }}" method="POST" id="agregar-respuesta"
+                                class="col-md-10 mx-auto" enctype='multipart/form-data'>
+                                @csrf
+                                <h4 class="question"><b></h4>
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
                                 <input type="hidden" name="question_id" value="{{ $question->id }}">
 
                                 @if ($question->video == 0)
-                                    <label for="answer">Respuesta</label>
                                     <textarea disabled rows="1" placeholder="Ingrese su respuesta aquí, no exceda los 1000 caracteres.."
                                         class="form-control autosize-input" style="height: 77px;" name="answer" idea id="answer"></textarea>
                                     <span id="span">Prepárate! El tiempo corre en: </span>
@@ -105,9 +108,9 @@
                                     <span id="countdown2"></span>
                                 @else
                                     <div>
-                                        <video autoplay="" id="stream-elem" controls width="500"
-                                            style="border-radius: 10px;" height="300" muted>
-                                            <source src="" type="" muted>
+                                        <video autoplay="" id="stream-elem" controls width="450"
+                                            style="border-radius: 10px;" height="250" muted>
+                                            <source src="" type="">
                                         </video>
                                     </div>
                                     <span id="span">Prepárate! La grabación empezará en: </span>
@@ -118,20 +121,20 @@
                                     <span id="countdown2"></span>
                                     <button type="button" class="d-none" id="start-stream">Empezar grabacion</button>
                                     {{-- <button type="button" class="d-none" id="stop-media">Parar grabación</button> --}}
-                                    <input type="hidden" name="answer" value="{{ $time }}">
                                     <br>
+                                    <input type="hidden" name="answer" value="{{ $time }}">
                                 @endif
-            @endif
-            {{-- Boton para parar el video y avanzar si es con video --}}
-            <button type="button" id="stop-media" class="btn btn-recluter mt-4 d-none">SIGUIENTE PREGUNTA <i
-                    class="fa-solid fa-forward"></i></button>
-            <br>
-            {{-- Boton para parar avanzar si no es con video --}}
-            <button type="submit" id="next" class="btn btn-recluter mt-4 d-none">SIGUIENTE PREGUNTA <i
-                    class="fa-solid fa-forward"></i></button>
-
-            </section>
-            </form>
+                    @endif
+                    {{-- Boton para parar el video y avanzar si es con video --}}
+                    <button type="button" id="stop-media" class="btn btn-recluter d-none">SIGUIENTE PREGUNTA <i
+                            class="fa-solid fa-forward"></i></button>
+                    <br>
+                    {{-- Boton para parar avanzar si no es con video --}}
+                    <button type="submit" id="next" class="btn btn-recluter d-none">SIGUIENTE PREGUNTA <i
+                            class="fa-solid fa-forward"></i></button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <script LANGUAGE="JavaScript">

@@ -130,13 +130,13 @@
                 <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
                     required value="{{ old('email') }}">
 
-                <label for="phone">Número de telefono</label>
+                <label for="phone">Número de Teléfono</label>
                 <input name="phone" id="phone" type="number" class="form-control mb-4"
                     placeholder="Númer de telefono.." required value="{{ old('phone') }}">
 
                 <label for="domicile">Domicilio</label>
                 <input name="domicile" id="domicile" type="text" class="form-control mb-4"
-                    placeholder="Lugar de Residencia.." required value="{{ old('domicile') }}">
+                    placeholder="Domicilio de Residencia.." required value="{{ old('domicile') }}">
 
                 <label for="date_of_birth">Fecha de Nacimiento</label>
                 <input name="date_of_birth"  max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date" class="form-control mb-4"

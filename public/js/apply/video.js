@@ -42,9 +42,9 @@ startBtn.addEventListener('click', function (e) {
             console.log('Parando de grabar..');
             //console.log(endBtn);
             var newVideoEl = document.createElement('video')
-            newVideoEl.height = '400'
-            newVideoEl.width = '600'
-            newVideoEl.radius = '10'
+            newVideoEl.height = '250'
+            newVideoEl.width = '450'
+            newVideoEl.style.cssText  = 'border-radius: 15px;'
             newVideoEl.autoplay = true
             newVideoEl.muted = true
             newVideoEl.controls = true
