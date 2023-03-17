@@ -32,10 +32,13 @@
     @php
         use App\Models\Company;
     @endphp
-    <div class="row justify-content-center">
-        <a href="/entrevistas/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i>
-                CREAR ENTREVISTA</button> </a>
-    </div>
+    @if (auth()->user()->roles->pluck('name')->contains('Admin'))
+    @else
+        <div class="row justify-content-center">
+            <a href="/entrevistas/create"> <button type="button" class="btn btn-success mb-3"> <i class="fas fa-plus"> </i>
+                    CREAR ENTREVISTA</button> </a>
+        </div>
+    @endif
 
     <div class="main-card mb-3 card">
         <div class="card-body">
