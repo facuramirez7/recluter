@@ -44,7 +44,7 @@
                         <th>Nombre</th>
                         <th>Rol</th>
                         <th>Email</th>
-                        <th>Verificado</th>
+                        {{-- <th>Verificado</th> --}}
                         <th>Empresa</th>
                         {{-- <th>Opciones</th> --}}
                     </tr>
@@ -56,13 +56,13 @@
                             <td>{{ $user->name }} </td>
                             <td>{{ str_replace(['"', '[', ']'], '', $user->roles->pluck('name')) }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>
+                            {{-- <td>
                                 @if ($user->email_verified_at == null)
                                     <i class="fa-solid fa-circle-xmark text-danger"></i>
                                 @else
                                     <i class="fa-solid fa-circle-check text-success"></i>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 @if (isset($user->company->name))
                                     {{ $user->company->name }}

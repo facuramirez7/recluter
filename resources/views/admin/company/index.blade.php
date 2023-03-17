@@ -44,7 +44,7 @@
                         <th>Logo</th>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Activo</th>
+                        {{-- <th>Activo</th> --}}
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -55,13 +55,13 @@
                             <td> <img src="/img/companies/{{ $company->photo }}" width="50px"></td>
                             <td>{{ $company->name }} </td>
                             <td>{{ $company->description }}</td>
-                            <td>
+                            {{-- <td>
                                 @if ($company->active == 0)
                                     <i class="fa-solid fa-circle-xmark text-danger"></i>
                                 @else
                                     <i class="fa-solid fa-circle-check text-success"></i>
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 <div class="row justify-content-center">
                                     <a class="mr-1" href="/empresas/{{ $company->id }}/edit"> <button type="button"
