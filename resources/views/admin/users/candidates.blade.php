@@ -59,9 +59,9 @@
                             <td>{{ $user->email }}</td>
                             @if (auth()->user()->roles->pluck('name')->contains('Admin'))
                                 @if (isset($user->company->name))
-                                    {{ $user->company->name }}
+                                <td>{{ $user->company->name }}</td>
                                 @else
-                                    -
+                                <td>-</td>
                                 @endif
                             @else
                             @endif
