@@ -132,7 +132,7 @@
 
                 <label for="phone">Número de Teléfono</label>
                 <input name="phone" id="phone" type="number" class="form-control mb-4"
-                    placeholder="Númer de telefono.." required value="{{ old('phone') }}">
+                    placeholder="Número de teléfono.." required value="{{ old('phone') }}">
 
                 <label for="domicile">Domicilio</label>
                 <input name="domicile" id="domicile" type="text" class="form-control mb-4"
