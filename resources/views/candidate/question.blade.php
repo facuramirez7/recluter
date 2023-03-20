@@ -37,6 +37,9 @@
                 <div class="card-header">{{ $company->name }} <img class="logo" src="/img/companies/{{ $company->photo }}"
                         alt="" style="border-radius: 100px;margin-left: 25px;"></div>
                 <div class="card-body">
+                    <div class="alert alert-primary d-none" role="alert" id="uploading">
+                        Subiendo el video...
+                    </div>
                     <h5 class="card-title"><i class="fa-solid fa-file-circle-question text-recluter"></i>
                         {{ $question->question }}</b></h5>
 
@@ -232,6 +235,8 @@
             function updateClock2() {
                 document.getElementById('countdown2').innerHTML = totalTime2;
                 if (totalTime2 == 0) {
+                    $("#uploading").removeClass("d-none");
+                    $("#stop-media").attr("disabled", true);
                     console.log('Apagar camara');
                     videoElem.pause();
                     recorder.stop();

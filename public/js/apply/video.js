@@ -44,7 +44,7 @@ startBtn.addEventListener('click', function (e) {
             var newVideoEl = document.createElement('video')
             newVideoEl.height = '250'
             newVideoEl.width = '450'
-            newVideoEl.style.cssText  = 'border-radius: 15px;'
+            newVideoEl.style.cssText = 'border-radius: 15px;'
             newVideoEl.autoplay = true
             newVideoEl.muted = true
             newVideoEl.controls = true
@@ -58,43 +58,47 @@ startBtn.addEventListener('click', function (e) {
             formdata.append('time', time);
             //alert(formdata)
 
-            if (myDomain == 'localhost') {
-                fetch('http://localhost:8000/guardar-video', {
-                    headers: {
-                        'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
-                    },
-                    method: 'POST',
-                    body: formdata
-                }).then(response => response.json())
-                    .then(function (data) {
-                        if (data.status == 'ok') {
-                            console.log('Se subió correctamente');
-                            $("#next").trigger("click");
-                        } else {
-                            console.log('Error');
-                            alert('Error al subir el video, por favor grabe de vuelta.');
-                            location.reload();
-                        }
-                    });
-            } else {
-                fetch('https://recluter.com/guardar-video', {
-                    headers: {
-                        'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
-                    },
-                    method: 'POST',
-                    body: formdata
-                }).then(response => response.json())
-                    .then(function (data) {
-                        if (data.status == 'ok') {
-                            console.log('Se subió correctamente');
-                            $("#next").trigger("click");
-                        } else {
-                            console.log('Error');
-                            alert('Error al subir el video, por favor grabe de vuelta.');
-                            location.reload();
-                        }
-                    });
-            } 
+
+
+            setTimeout(function () {
+                if (myDomain == 'localhost') {
+                    fetch('http://localhost:8000/guardar-video', {
+                        headers: {
+                            'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
+                        },
+                        method: 'POST',
+                        body: formdata
+                    }).then(response => response.json())
+                        .then(function (data) {
+                            if (data.status == 'ok') {
+                                console.log('Se subió correctamente');
+                                $("#next").trigger("click");
+                            } else {
+                                console.log('Error');
+                                alert('Error al subir el video, por favor grabe de vuelta.');
+                                location.reload();
+                            }
+                        });
+                } else {
+                    fetch('https://recluter.com/guardar-video', {
+                        headers: {
+                            'X-CSRF-TOKEN': window.CSRF_TOKEN// <--- aquí el token
+                        },
+                        method: 'POST',
+                        body: formdata
+                    }).then(response => response.json())
+                        .then(function (data) {
+                            if (data.status == 'ok') {
+                                console.log('Se subió correctamente');
+                                $("#next").trigger("click");
+                            } else {
+                                console.log('Error');
+                                alert('Error al subir el video, por favor grabe de vuelta.');
+                                location.reload();
+                            }
+                        });
+                }
+            }, 5000);
         }
     })
 
