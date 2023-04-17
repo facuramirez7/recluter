@@ -70,9 +70,13 @@
                                     <?php
                                     $interview = Interview::find($answer->question->interview_id);
                                     continue;
-                                    ?>
+                                    ?>    
                                 @endforeach
-                                {{ $interview->position }}
+                                @if(isset($interview))
+                                    {{ $interview->position }}
+                                @else
+                                    -
+                                @endif
                             </td>
                             <td>{{ count($user->question_answereds) }}</td>
                             <td>
