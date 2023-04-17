@@ -235,8 +235,6 @@
             function updateClock2() {
                 document.getElementById('countdown2').innerHTML = totalTime2;
                 if (totalTime2 == 0) {
-                    $("#uploading").removeClass("d-none");
-                    $("#stop-media").attr("disabled", true);
                     console.log('Apagar camara');
                     videoElem.pause();
                     recorder.stop();

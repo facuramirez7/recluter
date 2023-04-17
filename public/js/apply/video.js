@@ -38,6 +38,10 @@ startBtn.addEventListener('click', function (e) {
 
 
         recorder.onstop = function (e) {
+            $('#countdown2').hide();
+            $('#span2').hide();
+            $("#uploading").removeClass("d-none");
+            $("#stop-media").attr("disabled", true);
             console.log(window.URL.createObjectURL(new Blob(blobContainer)));
             console.log('Parando de grabar..');
             //console.log(endBtn);
