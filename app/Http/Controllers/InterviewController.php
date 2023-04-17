@@ -31,9 +31,16 @@ class InterviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function candidancie(User $user)
+    public function candidancie(User $user,Interview $interview)
     {
-        $answereds = QuestionAnswered::where('user_id', '=', $user->id)->get();
+        $userAuth = auth()->user();
+        $company_id = $userAuth->company_id;
+        $answereds = QuestionAnswered::
+                    select('question_answereds.*')
+                    ->join('questions', 'questions.id', '=', 'question_answereds.question_id')
+                    ->where('questions.interview_id', $interview->id)
+                    ->where('question_answereds.user_id', $user->id)
+                    ->get();
         $data = [
             'answereds' => $answereds,
             'user' => $user,

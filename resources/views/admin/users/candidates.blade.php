@@ -81,9 +81,15 @@
                             <td>{{ count($user->question_answereds) }}</td>
                             <td>
                                 <div class="row justify-content-center">
-                                    <a class="mr-1" href="/candidatura/{{ $user->id }}"> <button type="button"
-                                            class="btn btn-warning" data-toggle="tooltip" data-placement="top"
-                                            title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
+                                    @if( count($user->question_answereds) != 0)
+                                        <a class="mr-1" href="/candidatura/{{ $user->id }}/{{ $interview->id }}"> <button type="button"
+                                                class="btn btn-warning" data-toggle="tooltip" data-placement="top"
+                                                title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
+                                    @else
+                                        <a class="mr-1" href="/candidatos"> <button type="button"
+                                                class="btn btn-warning" data-toggle="tooltip" data-placement="top"
+                                                title="Visualizar" disabled> <i class="fa-solid fa-eye"></i> </button></a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
