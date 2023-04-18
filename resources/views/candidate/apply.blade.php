@@ -112,6 +112,13 @@
                 </ul>
             </div>
         @endif
+        @if (isset($error))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{{ $error }}</li>
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('aplicar.store.user') }}" method="POST" id="agregar-user" class="col-md-10 mx-auto"
             enctype='multipart/form-data'>
             @csrf
@@ -139,8 +146,8 @@
                     placeholder="Domicilio de Residencia.." required value="{{ old('domicile') }}">
 
                 <label for="date_of_birth">Fecha de Nacimiento</label>
-                <input name="date_of_birth"  max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date" class="form-control mb-4"
-                    placeholder="Fecha de Nacimiento.." value="{{ old('date_of_birth') }}">
+                <input name="date_of_birth" max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date"
+                    class="form-control mb-4" placeholder="Fecha de Nacimiento.." value="{{ old('date_of_birth') }}">
 
                 <input type="hidden" name="interview_id" value="{{ $interview->id }}">
 

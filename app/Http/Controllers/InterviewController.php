@@ -31,16 +31,15 @@ class InterviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function candidancie(User $user,Interview $interview)
+    public function candidancie(User $user, Interview $interview)
     {
         $userAuth = auth()->user();
         $company_id = $userAuth->company_id;
-        $answereds = QuestionAnswered::
-                    select('question_answereds.*')
-                    ->join('questions', 'questions.id', '=', 'question_answereds.question_id')
-                    ->where('questions.interview_id', $interview->id)
-                    ->where('question_answereds.user_id', $user->id)
-                    ->get();
+        $answereds = QuestionAnswered::select('question_answereds.*')
+            ->join('questions', 'questions.id', '=', 'question_answereds.question_id')
+            ->where('questions.interview_id', $interview->id)
+            ->where('question_answereds.user_id', $user->id)
+            ->get();
         $data = [
             'answereds' => $answereds,
             'user' => $user,
@@ -172,9 +171,18 @@ class InterviewController extends Controller
         ]);
         $user = User::where('email', '=', $request->email)->first();
         if (isset($user)) {
-            $user_update = $request->only(['name', 'surname', 'domicile']);
-            $user_update['company_id'] = $interview->company_id;
-            $user->update($user_update);
+            if (($user->company_id == $interview->company_id)) {
+                $error = 'Ya te encuentras en un proceso de selección en esta empresa, o eres reclutador de la misma.';
+                $data = [
+                    'interview' => $interview,
+                    'error' => $error
+                ];
+                return view('candidate.apply')->with($data);
+            } else {
+                $user_update = $request->only(['domicile', 'phone', 'domicile']);
+                $user_update['company_id'] = $interview->company_id;
+                $user->update($user_update);
+            }
         } else {
             $user = User::create([
                 'name' => $request->name,
