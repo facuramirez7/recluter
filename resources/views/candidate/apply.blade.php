@@ -29,9 +29,11 @@
             height: 300px;
         }
 
-        .video-recorded {
-            width: 465px;
-            height: 300px;
+        @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+            .video {
+                width: 345px;
+                 height: 204px;
+            }
         }
     </style>
 @endsection
@@ -78,7 +80,7 @@
                 <div class="modal-body row justify-content-center">
                     <div id="responsive-video">
                         <video class="video" muted src="" id="localVideo" controls></video>
-                        <video class="video-recorded" src="" id="recordVideo" style="display: none;" controls>
+                        <video class="video" src="" id="recordVideo" style="display: none;" controls>
                         </video>
                     </div>
                     <div class="mt-4 ">

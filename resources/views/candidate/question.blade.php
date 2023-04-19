@@ -27,6 +27,12 @@
         #countdown2 {
             font-size: 70px;
         }
+        @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+            .video-response {
+                width: 260px !important;
+                 height: 204px !important;
+            }
+        }
     </style>
 @endsection
 
@@ -75,7 +81,7 @@
                                 <span id="countdown2"></span>
                             @else
                                 <div>
-                                    <video autoplay="" id="stream-elem" controls width="450"
+                                    <video class="video-response" class="video-response" autoplay="" id="stream-elem" controls width="450"
                                         style="border-radius: 10px;" height="250" muted>
                                         <source src="" type="">
                                     </video>
@@ -111,7 +117,7 @@
                                     <span id="countdown2"></span>
                                 @else
                                     <div>
-                                        <video autoplay="" id="stream-elem" controls width="450"
+                                        <video class="video-response" autoplay="" id="stream-elem" controls width="450"
                                             style="border-radius: 10px;" height="250" muted>
                                             <source src="" type="">
                                         </video>
