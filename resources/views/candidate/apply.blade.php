@@ -3,6 +3,24 @@
 @php
     use App\Models\Company;
     $company = Company::find($interview->company_id);
+    $tablet_browser = 0;
+    $mobile_browser = 0;
+    $body_class = 'desktop';
+    
+    if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        $tablet_browser++;
+        $body_class = 'tablet';
+    }
+    
+    if (preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|android|iemobile)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
+        $mobile_browser++;
+        $body_class = 'mobile';
+    }
+    
+    if (strpos(strtolower($_SERVER['HTTP_ACCEPT']), 'application/vnd.wap.xhtml+xml') > 0 or (isset($_SERVER['HTTP_X_WAP_PROFILE']) or isset($_SERVER['HTTP_PROFILE']))) {
+        $mobile_browser++;
+        $body_class = 'mobile';
+    }
 @endphp
 
 @section('title')
@@ -32,142 +50,176 @@
         @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
             .video {
                 width: 345px;
-                 height: 204px;
+                height: 204px;
             }
         }
     </style>
 @endsection
 
 @section('content')
+
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary d-none modal-btn" data-toggle="modal" data-target="#exampleModal">
         Launch demo modal
     </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}" class="R"
-                            alt="R"></h5>
-                </div>
-                <div class="modal-body">
-                    Hola! Bienvenido al proceso de selección de <b>{{ $company->name }}</b> para el puesto de
-                    <b>{{ $interview->position }}</b>.
-                    El proceso consiste en un par de preguntas que deberás responder de forma verbal dentro del tiempo
-                    determinado, también podremos solicitarte alguna respuesta por escrito o la realización de algún test.
-                    El proceso es muy intuitivo y no durará más de 10 minutos, es necesario que dejes activado la cámara y
-                    micrófono en todo el proceso.
-                    Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente. Éxitos!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-recluter" data-toggle="modal" data-target="#exampleModal2"
-                        data-dismiss="modal">Probar video <i class="fa-solid fa-video"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}" class="R"
-                            alt="R"></h5>
-                </div>
-                <div class="modal-body row justify-content-center">
-                    <div id="responsive-video">
-                        <video class="video" muted src="" id="localVideo" controls></video>
-                        <video class="video" src="" id="recordVideo" style="display: none;" controls>
-                        </video>
-                    </div>
-                    <div class="mt-4 ">
-                        <button id="btn" class="btn btn-info">Autorizar</button>
-                        <button id="recordbtn" class="btn btn-success" disabled>Empezar a grabar</button>
-                        <!-- <button id="stopRecording">stop</button> -->
-                        <button id="paused" class="btn btn-danger" style="display: none;" disabled><i
-                                class="fa-solid fa-pause"></i></button>
-                        <button id="Play" class="btn btn-success" disabled><i class="fa-solid fa-play"></i></button>
-                        {{-- <button id="mic"><i class="fa-solid fa-microphone-slash"></i></button> --}}
-                        {{-- <button id="shareScreen">Share</button> --}}
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i
-                            class="fa-solid fa-xmark"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <h1>{{ $company->name }}<img src="/img/companies/{{ $company->photo }}" alt=""
-                style="max-height: 100px; border-radius: 100px;margin-left: 25px;"></h1>
-        @if ($errors->any())
+    {{-- If is mobile --}}
+    @if ($tablet_browser > 0 or $mobile_browser > 0)
+        <div class="container">
             <div class="alert alert-danger">
                 <ul>
-                    @foreach ($errors->all() as $error)
+                    <li>Para realizar ésta entrevista, necesitas realizarlo en una computadora/notebook y no desde un
+                        dispositivo móvil.</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}"
+                                class="R" alt="R"></h5>
+                    </div>
+                    <div class="modal-body">
+                        Hola! Bienvenido al proceso de selección de <b>{{ $company->name }}</b> para el puesto de
+                        <b>{{ $interview->position }}</b>.
+                        Hemos detectado que estás en un dispotivo móvil, para relizar esta entrevista, deberás ingresar a la
+                        misma en una computadora/notebook <i class="fa-solid fa-computer"></i> y contar con un micrófono y cámara!
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}"
+                                class="R" alt="R"></h5>
+                    </div>
+                    <div class="modal-body">
+                        Hola! Bienvenido al proceso de selección de <b>{{ $company->name }}</b> para el puesto de
+                        <b>{{ $interview->position }}</b>.
+                        El proceso consiste en un par de preguntas que deberás responder de forma verbal dentro del tiempo
+                        determinado, también podremos solicitarte alguna respuesta por escrito o la realización de algún
+                        test.
+                        El proceso es muy intuitivo y no durará más de 10 minutos, es necesario que dejes activado la cámara
+                        y
+                        micrófono en todo el proceso.
+                        Una vez iniciado el proceso al hacer clic en Comenzar, no podrás iniciar nuevamente. Éxitos!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-recluter" data-toggle="modal" data-target="#exampleModal2"
+                            data-dismiss="modal">Probar video <i class="fa-solid fa-video"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/logo/R.png') }}"
+                                class="R" alt="R"></h5>
+                    </div>
+                    <div class="modal-body row justify-content-center">
+                        <div id="responsive-video">
+                            <video class="video" muted src="" id="localVideo" controls></video>
+                            <video class="video" src="" id="recordVideo" style="display: none;" controls>
+                            </video>
+                        </div>
+                        <div class="mt-4 ">
+                            <button id="btn" class="btn btn-info">Autorizar</button>
+                            <button id="recordbtn" class="btn btn-success" disabled>Empezar a grabar</button>
+                            <!-- <button id="stopRecording">stop</button> -->
+                            <button id="paused" class="btn btn-danger" style="display: none;" disabled><i
+                                    class="fa-solid fa-pause"></i></button>
+                            <button id="Play" class="btn btn-success" disabled><i
+                                    class="fa-solid fa-play"></i></button>
+                            {{-- <button id="mic"><i class="fa-solid fa-microphone-slash"></i></button> --}}
+                            {{-- <button id="shareScreen">Share</button> --}}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i
+                                class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h1>{{ $company->name }}<img src="/img/companies/{{ $company->photo }}" alt=""
+                    style="max-height: 100px; border-radius: 100px;margin-left: 25px;"></h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (isset($error))
+                <div class="alert alert-danger">
+                    <ul>
                         <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if (isset($error))
-            <div class="alert alert-danger">
-                <ul>
-                    <li>{{ $error }}</li>
-                </ul>
-            </div>
-        @endif
-        <form action="{{ route('aplicar.store.user') }}" method="POST" id="agregar-user" class="col-md-10 mx-auto"
-            enctype='multipart/form-data'>
-            @csrf
-            {{-- Datos básicos del Candidato --}}
-            <section id="" class="card-body">
-                <p><b>DATOS DEL CANDIDATO</b></p>
-                <label for="name">Nombre</label>
-                <input name="name" id="name" type="text" class="form-control mb-4" placeholder="Nombre.."
-                    required value="{{ old('name') }}">
+                    </ul>
+                </div>
+            @endif
+            <form action="{{ route('aplicar.store.user') }}" method="POST" id="agregar-user" class="col-md-10 mx-auto"
+                enctype='multipart/form-data'>
+                @csrf
+                {{-- Datos básicos del Candidato --}}
+                <section id="" class="card-body">
+                    <p><b>DATOS DEL CANDIDATO</b></p>
+                    <label for="name">Nombre</label>
+                    <input name="name" id="name" type="text" class="form-control mb-4"
+                        placeholder="Nombre.." required value="{{ old('name') }}">
 
-                <label for="surname">Apellido</label>
-                <input name="surname" id="surname" type="text" class="form-control mb-4" placeholder="Apellido.."
-                    required value="{{ old('surname') }}">
+                    <label for="surname">Apellido</label>
+                    <input name="surname" id="surname" type="text" class="form-control mb-4"
+                        placeholder="Apellido.." required value="{{ old('surname') }}">
 
-                <label for="email">Email</label>
-                <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
-                    required value="{{ old('email') }}">
+                    <label for="email">Email</label>
+                    <input name="email" id="email" type="email" class="form-control mb-4" placeholder="Email.."
+                        required value="{{ old('email') }}">
 
-                <label for="phone">Número de Teléfono</label>
-                <input name="phone" id="phone" type="number" class="form-control mb-4"
-                    placeholder="Número de teléfono.." required value="{{ old('phone') }}">
+                    <label for="phone">Número de Teléfono</label>
+                    <input name="phone" id="phone" type="number" class="form-control mb-4"
+                        placeholder="Número de teléfono.." required value="{{ old('phone') }}">
 
-                <label for="domicile">Domicilio</label>
-                <input name="domicile" id="domicile" type="text" class="form-control mb-4"
-                    placeholder="Domicilio de Residencia.." required value="{{ old('domicile') }}">
+                    <label for="domicile">Domicilio</label>
+                    <input name="domicile" id="domicile" type="text" class="form-control mb-4"
+                        placeholder="Domicilio de Residencia.." required value="{{ old('domicile') }}">
 
-                <label for="date_of_birth">Fecha de Nacimiento</label>
-                <input name="date_of_birth" max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date"
-                    class="form-control mb-4" placeholder="Fecha de Nacimiento.." value="{{ old('date_of_birth') }}">
+                    <label for="date_of_birth">Fecha de Nacimiento</label>
+                    <input name="date_of_birth" max='2020-01-01' min='1900-01-01' id="date_of_birth" type="date"
+                        class="form-control mb-4" placeholder="Fecha de Nacimiento.."
+                        value="{{ old('date_of_birth') }}">
 
-                <input type="hidden" name="interview_id" value="{{ $interview->id }}">
+                    <input type="hidden" name="interview_id" value="{{ $interview->id }}">
 
-                <button type="submit" id="start" class="btn btn-recluter" disabled>Comenzar <i
-                        class="fa-solid fa-hourglass-start"></i></button>
-            </section>
-        </form>
+                    <button type="submit" id="start" class="btn btn-recluter" disabled>Comenzar <i
+                            class="fa-solid fa-hourglass-start"></i></button>
+                </section>
+            </form>
 
-        <p><b>Puesto:</b></p>
-        <p>{{ $interview->position }}</p>
-        <p><b>Descrpición:</b></p>
-        <p>{{ $interview->description }}</p>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-recluter bt-4" data-toggle="modal" data-target="#exampleModal2">
-            <i class="fa-solid fa-video"></i> Prueba de Video
-        </button>
+            <p><b>Puesto:</b></p>
+            <p>{{ $interview->position }}</p>
+            <p><b>Descrpición:</b></p>
+            <p>{{ $interview->description }}</p>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-recluter bt-4" data-toggle="modal" data-target="#exampleModal2">
+                <i class="fa-solid fa-video"></i> Prueba de Video
+            </button>
 
-    </div>
+        </div>
+    @endif
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
