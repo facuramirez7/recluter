@@ -171,7 +171,8 @@ class InterviewController extends Controller
         ]);
         $user = User::where('email', '=', $request->email)->first();
         if (isset($user)) {
-            if (($user->company_id == $interview->company_id)) {
+            $answers = count($user->question_answereds);
+            if (($user->company_id == $interview->company_id && $answers > 0)) {
                 $error = 'Ya te encuentras en un proceso de selección en esta empresa, o eres reclutador de la misma.';
                 $data = [
                     'interview' => $interview,
