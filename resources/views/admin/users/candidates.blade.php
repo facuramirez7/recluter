@@ -59,9 +59,9 @@
                             <td>{{ $user->email }}</td>
                             @if (auth()->user()->roles->pluck('name')->contains('Admin'))
                                 @if (isset($user->company->name))
-                                <td>{{ $user->company->name }}</td>
+                                    <td>{{ $user->company->name }}</td>
                                 @else
-                                <td>-</td>
+                                    <td>-</td>
                                 @endif
                             @else
                             @endif
@@ -70,9 +70,9 @@
                                     <?php
                                     $interview = Interview::find($answer->question->interview_id);
                                     continue;
-                                    ?>    
+                                    ?>
                                 @endforeach
-                                @if(isset($interview))
+                                @if (isset($interview))
                                     {{ $interview->position }}
                                 @else
                                     -
@@ -81,14 +81,20 @@
                             <td>{{ count($user->question_answereds) }}</td>
                             <td>
                                 <div class="row justify-content-center">
-                                    @if( count($user->question_answereds) != 0)
-                                        <a class="mr-1" href="/candidatura/{{ $user->id }}/{{ $interview->id }}"> <button type="button"
-                                                class="btn btn-warning" data-toggle="tooltip" data-placement="top"
-                                                title="Visualizar"> <i class="fa-solid fa-eye"></i> </button></a>
-                                    @else
-                                        <a class="mr-1" href="/candidatos"> <button type="button"
-                                                class="btn btn-warning" data-toggle="tooltip" data-placement="top"
-                                                title="Visualizar" disabled> <i class="fa-solid fa-eye"></i> </button></a>
+                                    <a class="mr-1" href="/candidatura/{{ $user->id }}/{{ $interview->id }}">
+                                        <button type="button" class="btn btn-warning" data-toggle="tooltip"
+                                            data-placement="top" title="Visualizar"
+                                            @if (count($user->question_answereds) != 0) @else disabled @endif> <i
+                                                class="fa-solid fa-eye"></i> </button></a>
+                                    @if (auth()->user()->roles->pluck('name')->contains('Admin'))
+                                        <form action="{{ route('usuarios.destroy', $user->id) }}" method="POST"
+                                            class="ml-1 formDelete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                                data-placement="top" title="Eliminar"><i
+                                                    class="far fa-trash-alt"></i></i></button>
+                                        </form>
                                     @endif
                                 </div>
                             </td>

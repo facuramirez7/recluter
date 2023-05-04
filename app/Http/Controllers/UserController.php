@@ -65,17 +65,17 @@ class UserController extends Controller
             $interviews = Interview::where('company_id', '=',  auth()->user()->company_id)->get();
             $candidates = User::where('password', '=', null)->where('company_id', '=',  auth()->user()->company_id)->get();
 
-             //cantidades
-             $count_u = count($users);
-             $count_c = count($candidates);
-             $count_i = count($interviews);
-             $count_a = 12;
-             $data = [
-                 'users' => $count_u,
-                 'candidates' => $count_c,
-                 'interviews' => $count_i,
-                 'answers' => $count_a
-             ];
+            //cantidades
+            $count_u = count($users);
+            $count_c = count($candidates);
+            $count_i = count($interviews);
+            $count_a = 12;
+            $data = [
+                'users' => $count_u,
+                'candidates' => $count_c,
+                'interviews' => $count_i,
+                'answers' => $count_a
+            ];
         }
         return view('admin.dashboard')->with($data);
     }
@@ -143,6 +143,18 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        foreach ($user->question_answereds as $answer) {
+            if ($answer->question->video == 1) {
+                $video = public_path() . '/video/answer/' . $answer->answer;
+                if (file_exists($video)) {
+                    //dd($video);
+                    unlink($video);
+                }
+            }
+            $answer->delete();
+        }
+        $user->delete();
+        return redirect()->route('candidatos');
     }
 }
