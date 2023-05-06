@@ -27,6 +27,29 @@
         #countdown2 {
             font-size: 70px;
         }
+        .bar {
+            float: left;
+            width: 15px;
+            height: 6px;
+            border-radius: 2px;
+            background-color: #4b9cdb;
+        }
+        .load-10 .bar {
+            animation: loadingJ 2s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite;
+        }
+        @keyframes loadingJ {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(80px, 0);
+                background-color: #7843E6;
+                width: 25px;
+            }
+        }
+        
         @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
             .video-response {
                 width: 260px !important;
@@ -44,7 +67,7 @@
                         alt="" style="border-radius: 100px;margin-left: 25px;"></div>
                 <div class="card-body">
                     <div class="alert alert-primary d-none" role="alert" id="uploading">
-                        Subiendo el video...
+                        <div class="load-10"><div class="bar"></div></div> Subiendo respuesta...
                     </div>
                     <h5 class="card-title"><i class="fa-solid fa-file-circle-question text-recluter"></i>
                         {{ $question->question }}</b></h5>

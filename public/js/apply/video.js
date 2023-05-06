@@ -63,8 +63,9 @@ startBtn.addEventListener('click', function (e) {
             //alert(formdata)
 
 
-
+            console.log('Waiting 5 seconds..')
             setTimeout(function () {
+                console.log('Returning!')
                 if (myDomain == 'localhost') {
                     fetch('http://localhost:8000/guardar-video', {
                         headers: {
